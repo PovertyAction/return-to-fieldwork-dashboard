@@ -54,12 +54,14 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
       $.ajax({
         'async': false,
         'global': false,
-        'url': "/countries.json",
+        'url': "./countries.json",
         'dataType': "json",
         'success': function(data) {
           countries_json = data;
         }
       });
+
+      console.log(countries_json);
 
       //Include aditional covid data to geojson
       for (var i = 0; i < countries_json.features.length; i++) {
