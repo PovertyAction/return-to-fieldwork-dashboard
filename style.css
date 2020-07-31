@@ -19,7 +19,7 @@ h3 {
     font-family: "Open Sans";
     color: "grey";
     font-size: 20px;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
 }
 
@@ -55,30 +55,10 @@ body {
     width: 300px;
     height: 500px;
     margin: 30px;
-    text-align: center;
+    text-align: left;
     display: column;
     justify-content: center; 
 }
-
-#government-restrictions-text-box{
-    width: 300px;
-    height: 300px;*/
-
-    /*height: 100%;*/
-
-    display: column;
-    justify-content: center; 
-}
-
-#subnational-outbreak-status-text-box{
-    width: 300px;
-    height: 150px;
-    /*height: 100%;*/
-
-    display: column;
-    justify-content: center; 
-}
-
 
 .info {
     padding: 6px 8px;
@@ -102,6 +82,7 @@ body {
 
 #info-box-text{
     margin: 0 0 0.3px;
+    text-align: left;
 }
 
 footer {

@@ -54,7 +54,7 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
       $.ajax({
         'async': false,
         'global': false,
-        'url': "https://povertyaction.github.io/return-to-fieldwork-dashboard/countries.json",
+        'url': "countries.json",
         'dataType': "json",
         'success': function(data) {
           countries_json = data;
@@ -66,6 +66,11 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
       //Include aditional covid data to geojson
       for (var i = 0; i < countries_json.features.length; i++) {
         country_name = countries_json.features[i].properties.name;
+
+        if(country_name.includes("Dominican")){
+            console.log("yayaya");
+            console.log(country_name);
+        }
         if (country_name in covid_data) {
             countries_json.features[i].properties.status = covid_data[country_name].status;
             countries_json.features[i].properties.new_cases = covid_data[country_name].new_cases;
@@ -167,7 +172,7 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
         // console.log(props.abbrev);
 
         if(props && props.status){
-            update_text_boxes(props.government_restrictions, props.subnational_outbreak_status);
+            update_text_boxes(props.name, props.government_restrictions, props.subnational_outbreak_status);
         }
         else{
             update_text_boxes("","");
@@ -187,20 +192,20 @@ function update_subtitle(){
     document.getElementById("subtitle").innerHTML = "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection"; 
 }
 
-function update_text_boxes(government_restrictions, subnational_outbreak_status){
+function update_text_boxes(country_name, government_restrictions, subnational_outbreak_status){
     
     text_box = document.getElementById("text-boxes")
     text_box.innerHTML = ''
 
     if (government_restrictions){
         text_box.innerHTML = text_box.innerHTML +
-        '<h3>Government restrictions</h3>'+
+        '<h3>'+country_name +' Government restrictions</h3>'+
         '<p>'+government_restrictions+'</p>';
     }
 
     if (subnational_outbreak_status){
         text_box.innerHTML = text_box.innerHTML +
-        '<h3>Subnational outbreak status</h3>'+
+        '<h3>'+country_name + ' subnational outbreak status</h3>'+
         '<p>'+subnational_outbreak_status+'</p>';
     }
 }
