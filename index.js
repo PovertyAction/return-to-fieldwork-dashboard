@@ -54,7 +54,7 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
       $.ajax({
         'async': false,
         'global': false,
-        'url': "./countries.json",
+        'url': "https://povertyaction.github.io/return-to-fieldwork-dashboard/countries.json",
         'dataType': "json",
         'success': function(data) {
           countries_json = data;
