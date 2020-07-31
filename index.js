@@ -5,10 +5,10 @@
 
 //Get the covid data from gsheet
 var covid_data = {};
-var data = 'a';
+
+//Load covid data and then create map
 var spreadsheetId = '1xvFTrmbjrJbYDHKej_AsEcCWEwsM7JCGxCdzYPZRQgk';
 
-//Write everything inside this function, so that the map is built only once the covid data is loaded
 new RGraph.Sheets(spreadsheetId, function (sheet)
 {
     //Loading covid data
@@ -29,7 +29,11 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
                         "government_restrictions":government_restrictions,
                         "subnational_outbreak_status":subnational_outbreak_status};
     }
+    CreateMap();
+    CreateTable();
+});
 
+function CreateMap(){
 
     var mapboxAccessToken = 'pk.eyJ1IjoiZmhhbGFtb3MiLCJhIjoiY2tibGE1dzNsMHV6ODJxcGc0c3ZiZDRlaSJ9.Ay9GTz6DHTpPB0RsmEF1Nw';
     var map = L.map('map').setView([0, 0], 1.5);
@@ -186,7 +190,7 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
 
 
 
-});
+}
 
 function update_subtitle(){
     document.getElementById("subtitle").innerHTML = "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection"; 
@@ -210,9 +214,7 @@ function update_text_boxes(country_name, government_restrictions, subnational_ou
     }
 }
 
-
-
-
+//Get status of country based on its covid stats
 function get_status(new_cases, doubling_rate, cases_per_100000){
     
     //Parse all arguments to integers
@@ -226,4 +228,48 @@ function get_status(new_cases, doubling_rate, cases_per_100000){
     else{
         return 'red';
     }
+}
+
+
+
+//Build table. ReferenceÑ https://www.valentinog.com/blog/html-table/
+function CreateTable(){
+
+    function generateTableHead(table, data) {
+      let thead = table.createTHead();
+      let row = thead.insertRow();
+      for (let key of data){
+        let th = document.createElement("th");
+        let text = document.createTextNode(key);
+        th.appendChild(text);
+        row.appendChild(th);
+      }
+    }
+
+    function generateTable(table, covid_data) {
+      //For every country
+      for (let country of Object.keys(covid_data)) {
+        //Create row
+        let row = table.insertRow();
+
+        //Insert name of country
+        let cell = row.insertCell();
+        let text = document.createTextNode(country);
+        cell.appendChild(text);
+
+        //Insert each info of the country
+        for (key in covid_data[country]) {
+            if(key!='status'){
+                let cell = row.insertCell();
+                let text = document.createTextNode(covid_data[country][key]);
+                cell.appendChild(text);                
+            }
+        }
+      }
+    }
+
+    let table = document.querySelector("table");
+
+    generateTable(table, covid_data);
+    generateTableHead(table, ['Country', 'New cases per day','Case doubling rate','Cases per 100,000 people', 'Government restrictions', 'Subnational outbreak status']);
 }
