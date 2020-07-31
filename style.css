@@ -1,0 +1,123 @@
+h1 { 
+    font-family: "Open Sans";
+    color: #81B53C;
+    font-size: 60px;
+    text-align: center;
+    margin: 10px;}
+    /**/
+
+#subtitle { 
+    font-family: "Open Sans";
+    color: "grey";
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+h3 { 
+    font-family: "Open Sans";
+    color: "grey";
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+p { 
+    font-family: "Open Sans";
+    color: #777;
+    font-size: 20px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.vis-container {
+    display: flex;
+    justify-content: left;
+}
+
+
+#map {
+    width: 750px;
+    height: 500px;
+    margin: 30px;
+/*    width: 100%;
+    height: 100%;
+*/
+    display: flex;
+    justify-content: left; 
+}
+
+#text-boxes{
+    width: 300px;
+    height: 500px;
+    margin: 30px;
+    text-align: center;
+    display: column;
+    justify-content: center; 
+}
+
+#government-restrictions-text-box{
+    width: 300px;
+    height: 300px;*/
+
+    /*height: 100%;*/
+
+    display: column;
+    justify-content: center; 
+}
+
+#subnational-outbreak-status-text-box{
+    width: 300px;
+    height: 150px;
+    /*height: 100%;*/
+
+    display: column;
+    justify-content: center; 
+}
+
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+#info-box{
+    margin: 0 0 5px;
+    color: #777;
+    /*color: "grey";*/
+
+}
+
+#info-box-text{
+    margin: 0 0 0.3px;
+}
+
+footer {
+  background-color: #81B53C;
+  color: #FFF;
+  height: 55px;
+
+  display: flex;
+  justify-content: left;
+  padding:5px;
+
+}
+
+footer p{
+  margin: 5px;
+  font-family: sans-serif;
+  font-style: italic;
+  color: #FFFFFF;
+}
