@@ -88,16 +88,6 @@ function CreateMap(){
       return countries_json;
     })();
 
-    // Function to get color of country
-    function getColor(d) {
-        return d == 'red' ? 'red' :
-               d == 'yellow' ? '#E89423' :
-               d == 'green' ? '#81B53C' :
-               '#CDCDCD';
-    }
-
-
-
     //Listeners:
     //Highlighted visually when countries they are hovered with a mouse
     function highlightFeature(e) {
@@ -192,6 +182,14 @@ function CreateMap(){
 
 }
 
+// Function to get color of country based on status
+function getColor(status) {
+    return status == 'red' ? '#CA3433' :
+           status == 'yellow' ? '#E89423' :
+           status == 'green' ? '#81B53C' :
+           '#CDCDCD';
+}
+
 function update_subtitle(){
     document.getElementById("subtitle").innerHTML = "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection"; 
 }
@@ -251,6 +249,8 @@ function CreateTable(){
       for (let country of Object.keys(covid_data)) {
         //Create row
         let row = table.insertRow();
+
+        row.style.background = getColor(covid_data[country].status);
 
         //Insert name of country
         let cell = row.insertCell();
