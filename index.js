@@ -22,7 +22,7 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
         subnational_outbreak_status = data[i][5];
 
         covid_data[country] = {
-                        "status":"red",
+                        "status": get_status(new_cases, doubling_rate, cases_per_100000),
                         "new_cases":new_cases,
                         "doubling_rate":doubling_rate,
                         "cases_per_100000":cases_per_100000,
@@ -207,3 +207,18 @@ function update_text_boxes(government_restrictions, subnational_outbreak_status)
 
 
 
+
+function get_status(new_cases, doubling_rate, cases_per_100000){
+    
+    //Parse all arguments to integers
+    new_cases = parseInt(new_cases.toString().replace(">",""))
+    doubling_rate = parseInt(doubling_rate.toString().replace(">",""))
+    cases_per_100000 = parseInt(cases_per_100000.toString().replace(">",""))
+
+    if(new_cases<100 && (doubling_rate>=10 || doubling_rate<=0) && cases_per_100000<50){
+        return 'yellow';
+    }
+    else{
+        return 'red';
+    }
+}
