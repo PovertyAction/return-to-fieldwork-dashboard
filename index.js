@@ -121,10 +121,9 @@ function CreateMap(){
     function style(feature) {
         return {
             fillColor: getColor(feature.properties.status),
-            weight: 2,
+            weight: 1,
             opacity: 1,
-            color: 'white',
-            dashArray: '3',
+            color: '#CDCDCD',//'white',
             fillOpacity: 0.7
         };
     }
@@ -187,7 +186,7 @@ function getColor(status) {
     return status == 'red' ? '#CA3433' :
            status == 'yellow' ? '#E89423' :
            status == 'green' ? '#81B53C' :
-           '#CDCDCD';
+           '#FFFFFF';//#CDCDCD
 }
 
 function update_subtitle(){

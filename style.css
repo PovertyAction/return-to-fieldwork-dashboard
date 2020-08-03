@@ -29,6 +29,10 @@ p {
     font-size: 20px;
 }
 
+#text-boxes p {
+    font-size: 17px;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -41,8 +45,8 @@ body {
 
 
 #map {
-    width: 750px;
-    height: 500px;
+    width: 650px;
+    height: 433px;
     margin: 30px;
 /*    width: 100%;
     height: 100%;
@@ -52,7 +56,7 @@ body {
 }
 
 #text-boxes{
-    width: 300px;
+    width: 400px;
     height: 500px;
     margin: 30px;
     text-align: left;
@@ -76,8 +80,6 @@ body {
 #info-box{
     margin: 0 0 5px;
     color: #777;
-    /*color: "grey";*/
-
 }
 
 #info-box-text{
