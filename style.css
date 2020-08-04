@@ -109,6 +109,8 @@ table {margin: 20px;}
 
 th {background-color: #CBD3D8;}
 
-tr {font-family: "Open Sans";}
+tr {
+  font-family: "Open Sans";
+  opacity: 0.7;}
 
 tr:nth-child(even) {background-color: #f2f2f2;}
