@@ -11,7 +11,7 @@ var spreadsheetId = '1xvFTrmbjrJbYDHKej_AsEcCWEwsM7JCGxCdzYPZRQgk';
 
 new RGraph.Sheets(spreadsheetId, function (sheet)
 {
-    //Loading covid data
+    // Loading covid data
     data = sheet.get('C6:H26');
     for (var i = 0; i < data.length; i++){
         country = data[i][0];
@@ -27,11 +27,15 @@ new RGraph.Sheets(spreadsheetId, function (sheet)
                         "doubling_rate":doubling_rate,
                         "cases_per_100000":cases_per_100000,
                         "government_restrictions":government_restrictions,
-                        "subnational_outbreak_status":subnational_outbreak_status};
+                        "subnational_outbreak_status":subnational_outbreak_status
+                    };
     }
     CreateMap();
     CreateTable();
 });
+
+// CreateMap();
+// CreateTable();
 
 function CreateMap(){
 
@@ -65,16 +69,10 @@ function CreateMap(){
         }
       });
 
-      console.log(countries_json);
-
       //Include aditional covid data to geojson
       for (var i = 0; i < countries_json.features.length; i++) {
         country_name = countries_json.features[i].properties.name;
 
-        if(country_name.includes("Dominican")){
-            console.log("yayaya");
-            console.log(country_name);
-        }
         if (country_name in covid_data) {
             countries_json.features[i].properties.status = covid_data[country_name].status;
             countries_json.features[i].properties.new_cases = covid_data[country_name].new_cases;
@@ -153,6 +151,23 @@ function CreateMap(){
         return this._div;
     };
 
+    function update_text_boxes(country_name, government_restrictions, subnational_outbreak_status){
+        text_box = document.getElementById("text-boxes")
+        text_box.innerHTML = ''
+
+        if (government_restrictions){
+            text_box.innerHTML = text_box.innerHTML +
+            '<h3>'+country_name +' Government restrictions</h3>'+
+            '<p>'+government_restrictions+'</p>';
+        }
+
+        if (subnational_outbreak_status){
+            text_box.innerHTML = text_box.innerHTML +
+            '<h3>'+country_name + ' subnational outbreak status</h3>'+
+            '<p>'+subnational_outbreak_status+'</p>';
+        }
+    }
+
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
 
@@ -175,10 +190,17 @@ function CreateMap(){
 
     info.addTo(map);
 
-    update_subtitle();
+    //Update subtitle
+    document.getElementById("subtitle").innerHTML = "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection";
 
+    function fill_map_keys(){
+        //Change visibility of keys
+        for (let rectangle of document.getElementsByClassName('key-container')){
+            rectangle.style.visibility = 'visible';
+        }
+    }
 
-
+    fill_map_keys();
 }
 
 // Function to get color of country based on status
@@ -187,28 +209,6 @@ function getColor(status) {
            status == 'yellow' ? '#E89423' :
            status == 'green' ? '#81B53C' :
            '#FFFFFF';//#CDCDCD
-}
-
-function update_subtitle(){
-    document.getElementById("subtitle").innerHTML = "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection"; 
-}
-
-function update_text_boxes(country_name, government_restrictions, subnational_outbreak_status){
-    
-    text_box = document.getElementById("text-boxes")
-    text_box.innerHTML = ''
-
-    if (government_restrictions){
-        text_box.innerHTML = text_box.innerHTML +
-        '<h3>'+country_name +' Government restrictions</h3>'+
-        '<p>'+government_restrictions+'</p>';
-    }
-
-    if (subnational_outbreak_status){
-        text_box.innerHTML = text_box.innerHTML +
-        '<h3>'+country_name + ' subnational outbreak status</h3>'+
-        '<p>'+subnational_outbreak_status+'</p>';
-    }
 }
 
 //Get status of country based on its covid stats

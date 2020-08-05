@@ -17,7 +17,21 @@
   
   
   <div class="vis-container">
-    <div id="map"></div>
+    <div class="map-container">
+      <div id="map"></div>
+      <div class="key-container" id="red-key">
+        <div class="colored-rectangle" id="red-rectangle"></div>
+        <p class="rectangle-info" id="red-rectangle-text-box">Project applications are discouraged and would not likely be approved except in very unusual circumstances and with detailed justification.</p>
+      </div>
+      <div class="key-container" id="yellow-key">
+        <div class="colored-rectangle" id="yellow-rectangle"></div>
+        <p class="rectangle-info" id="yellow-rectangle-text-box">Project applications will require careful justification and risk-benefit analysis. It will typically apply to countries where selected regions are safer, for example, excluding large cities where outbreaks might be present but contained. It is important that project applications provide evidence specific to the region where data will be collected (and where enumerators will be coming from).</p>
+      </div>
+      <div class="key-container" id="green-key">
+        <div class="colored-rectangle" id="green-rectangle"></div>
+        <p class="rectangle-info" id="green-rectangle-text-box">Projects have already been approved in this country and the conditions are somewhat favorable. Each project will still have to apply, but applications will have a greater presumption of being approved.</p>
+      </div>
+    </div>
     <div id="text-boxes"></div>
   </div>
   <table>
