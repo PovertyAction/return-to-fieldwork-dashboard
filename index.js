@@ -12,16 +12,28 @@ var spreadsheetId = '1xvFTrmbjrJbYDHKej_AsEcCWEwsM7JCGxCdzYPZRQgk';
 new RGraph.Sheets(spreadsheetId, function (sheet)
 {
     // Loading covid data
-    data = sheet.get('C6:H26');
+    data = sheet.get('B6:H26');
+    previous_region="";
     for (var i = 0; i < data.length; i++){
-        country = data[i][0];
-        new_cases = data[i][1];
-        doubling_rate = data[i][2];
-        cases_per_100000 = data[i][3];
-        government_restrictions = data[i][4];
-        subnational_outbreak_status = data[i][5];
+        // //For rows without region, 
+        // if(data[i][0]!=""){
+        //     region = data[i][0];
+        //     previous_region = region;
+        // }
+        // else{
+        //     region = previous_region;
+        // }
+
+        region = data[i][0];
+        country = data[i][1];
+        new_cases = data[i][2];
+        doubling_rate = data[i][3];
+        cases_per_100000 = data[i][4];
+        government_restrictions = data[i][5];
+        subnational_outbreak_status = data[i][6];
 
         covid_data[country] = {
+                        "region":region,
                         "status": get_status(new_cases, doubling_rate, cases_per_100000),
                         "new_cases":new_cases,
                         "doubling_rate":doubling_rate,
@@ -243,7 +255,14 @@ function CreateTable(){
       }
     }
 
+    function getRegionColor(region){
+
+    }
+
     function generateTable(table, covid_data) {
+      
+      let odd_region=false;
+
       //For every country
       for (let country of Object.keys(covid_data)) {
         //Create row
@@ -251,18 +270,40 @@ function CreateTable(){
 
         row.style.background = getColor(covid_data[country].status);
 
-        //Insert name of country
+        //Insert region of country
         let cell = row.insertCell();
-        let text = document.createTextNode(country);
+
+        //Paint region cell differently if region changed respect to previous one
+        region = covid_data[country]['region'];
+        if(region!=""){
+            odd_region = !odd_region;
+        }
+        if(odd_region){
+            cell.style.background = '#81B53C';
+        }
+        else{
+            cell.style.background = '#D9EAD3';
+            cell.style.colspan="2";
+        }
+                
+        let text = document.createTextNode(covid_data[country]['region']);
+        cell.appendChild(text);
+
+
+
+        
+
+        //Insert name of country
+        cell = row.insertCell();
+        text = document.createTextNode(country);
         cell.appendChild(text);
 
         //Insert each info of the country
-        for (key in covid_data[country]) {
-            if(key!='status'){
-                let cell = row.insertCell();
-                let text = document.createTextNode(covid_data[country][key]);
-                cell.appendChild(text);                
-            }
+        for (let key of ["new_cases", "doubling_rate","cases_per_100000","government_restrictions","subnational_outbreak_status"]) {
+            console.log(key);
+            let cell = row.insertCell();
+            let text = document.createTextNode(covid_data[country][key]);
+            cell.appendChild(text);                
         }
       }
     }
@@ -270,5 +311,5 @@ function CreateTable(){
     let table = document.querySelector("table");
 
     generateTable(table, covid_data);
-    generateTableHead(table, ['Country', 'New cases per day','Case doubling rate','Cases per 100,000 people', 'Government restrictions', 'Subnational outbreak status']);
+    generateTableHead(table, ['Region','Country', 'New cases per day','Case doubling rate','Cases per 100,000 people', 'Government restrictions', 'Subnational outbreak status']);
 }
