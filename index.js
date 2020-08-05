@@ -163,19 +163,26 @@ function CreateMap(){
         return this._div;
     };
 
-    function update_text_boxes(country_name, government_restrictions, subnational_outbreak_status){
+    function update_text_boxes(country_name, new_cases, doubling_rate, cases_per_100000, government_restrictions, subnational_outbreak_status){
         text_box = document.getElementById("text-boxes")
         text_box.innerHTML = ''
 
+        if (country_name){
+            text_box.innerHTML = '<h3>'+country_name+'</h3>'+ 
+            '<p>New cases per day(3-day avg): ' + new_cases + '</br>'+
+            'Case doubling rate (days): ' + doubling_rate + '</br>'+
+            'Cases per 100,000 people: ' + cases_per_100000+'</p>';
+        }
+
         if (government_restrictions){
             text_box.innerHTML = text_box.innerHTML +
-            '<h3>'+country_name +' Government restrictions</h3>'+
+            '<h3>Government restrictions</h3>'+
             '<p>'+government_restrictions+'</p>';
         }
 
         if (subnational_outbreak_status){
             text_box.innerHTML = text_box.innerHTML +
-            '<h3>'+country_name + ' subnational outbreak status</h3>'+
+            '<h3>Subnational outbreak status</h3>'+
             '<p>'+subnational_outbreak_status+'</p>';
         }
     }
@@ -183,16 +190,21 @@ function CreateMap(){
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
 
-        this._div.innerHTML = (props && props.status?
-            '<p id="info-box"><br><b id="info-box-text" style="color: black;">' + props.name + '</b><br/>' + 
-            '<br id="info-box-text">New cases per day(3-day avg): ' + props.new_cases + '<br />'+
-            '<br id="info-box-text">Case doubling rate (days): ' + props.doubling_rate + '<br />'+
-            '<br id="info-box-text">Cases per 100,000 people: ' + props.cases_per_100000 +'</p>'
-            : '<p id="info-box">Hover over a country where IPA works</p>');
-        // console.log(props.abbrev);
-
+        // Removing pop-up for the moment
+        // this._div.innerHTML = (props && props.status?
+        //     '<p id="info-box"><br><b id="info-box-text" style="color: black;">' + props.name + '</b><br/>' + 
+        //     '<br id="info-box-text">New cases per day(3-day avg): ' + props.new_cases + '<br />'+
+        //     '<br id="info-box-text">Case doubling rate (days): ' + props.doubling_rate + '<br />'+
+        //     '<br id="info-box-text">Cases per 100,000 people: ' + props.cases_per_100000 +'</p>'
+        //     : '<p id="info-box">Hover over a country where IPA works</p>');
+        
         if(props && props.status){
-            update_text_boxes(props.name, props.government_restrictions, props.subnational_outbreak_status);
+            update_text_boxes(props.name, 
+                props.new_cases,
+                props.doubling_rate,
+                props.cases_per_100000,
+                props.government_restrictions,
+                props.subnational_outbreak_status);
         }
         else{
             update_text_boxes("","");
