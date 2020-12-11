@@ -1,0 +1,184 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 { 
+    font-family: "Open Sans";
+    color: #81B53C;
+    font-size: 60px;
+    text-align: center;
+    margin: 10px;}
+    /**/
+
+#subtitle { 
+    font-family: "Open Sans";
+    color: "grey";
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+.vis-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  height: 700px; /*Maybe change this*/
+  width: 100%;
+}
+
+
+
+
+
+.map-container {
+  display: flex;  
+  flex-direction: column;
+  display: column;
+  width: 50%;
+  height: 100%;
+  /*justify-content: left;*/
+}
+
+.key-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  visibility: hidden; /*To be changed when map loaded*/
+}
+
+.colored-rectangle{
+  margin: 5px;
+  width: 10%;/*50px;*/
+  height:25px;
+  border:1px solid #777;
+  opacity: 0.7;
+}
+
+#green-rectangle {background-color: #81B53C}
+#red-rectangle {background-color: #CA3433}
+#yellow-rectangle {background-color: #E89423}
+
+.rectangle-info{
+  margin: 5px;
+  width: 90%;/*50px;*/
+}
+
+p.rectangle-info{
+  margin: 5px;
+}
+
+#text-boxes{
+    width: 400px;
+    height: 500px;
+    margin: 5px;
+    margin-left: 15px;
+    text-align: left;
+}
+
+
+h3 { 
+    font-family: "Open Sans";
+    color: "grey";
+    font-size: 20px;
+    text-align: left;
+    font-weight: bold;
+    margin: 0px;
+}
+
+p { 
+    font-family: "Open Sans";
+    color: #777;
+    font-size: 20px;
+}
+
+#text-boxes p {
+    margin-top: 0px;
+    padding-top: 0px;
+    font-size: 17px;
+}
+
+
+
+
+
+/*MAP CSS*/
+
+#map {
+    
+    height: 100%;/*433px;*/
+    width: 100%;
+/*    padding-left: 30px;
+    padding-top: 5px;
+    padding-right: 5px;*/
+    
+    /*height: 100%;*/
+
+/*    display: flex;
+    justify-content: left;*/ 
+}
+
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+#info-box{
+    margin: 0 0 5px;
+    color: #777;
+}
+
+#info-box-text{
+    margin: 0 0 0.3px;
+    text-align: left;
+}
+
+
+
+
+
+
+/*TABLE CSS*/
+
+table {margin: 20px;}
+
+th {background-color: #CBD3D8;}
+
+tr {
+  font-family: "Open Sans";
+  opacity: 0.7;}
+
+
+
+/*FOOTER CSS*/
+
+footer {
+  background-color: #81B53C;
+  color: #FFF;
+  height: 55px;
+
+  display: flex;
+  justify-content: left;
+  padding:5px;
+
+}
+
+footer p{
+  margin: 5px;
+  font-family: sans-serif;
+  font-style: italic;
+  color: #FFFFFF;
+}
