@@ -18,11 +18,11 @@ Internally, this will call:
 - stats_calculator.compute_country_stats()
 - update_web_server_country_stats()
 
-# Modules
+<!-- # Modules
 
 ## pull_spreadsheet_data.py
 
-https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
+https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html -->
 
 # Setup
 
