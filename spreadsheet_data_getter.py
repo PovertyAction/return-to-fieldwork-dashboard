@@ -78,7 +78,7 @@ def save_dict_to_json_file(dict, file_name):
     with open(file_name, 'w') as fp:
         json.dump(dict, fp)
 
-def main():
+def download_spreadsheet_data():
 
     #Get access to workbook
     workbook =  get_workbook("Return to fieldwork")
@@ -96,4 +96,4 @@ def main():
 
 if __name__ == '__main__':
 
-    main()
+    download_spreadsheet_data()
