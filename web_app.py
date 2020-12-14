@@ -30,19 +30,32 @@ def pandas_csv_to_json(file):
 
 
 
-#Load countries shape data
-with open('countries_shape.json') as f:
-    countries_shape = json.load(f)
+covid_data = None
+countries_shape = None
 
-#Load covid data
-with open('covid_data_per_country.json') as f:
-    covid_data = json.load(f)
-    print(covid_data)
+def load_covid_data():
+    global covid_data
+    with open('covid_data_per_country.json') as f:
+        covid_data = json.load(f)
+
+def load_countries_shape():
+    global countries_shape
+    with open('countries_shape.json') as f:
+        countries_shape = json.load(f)
+
+@app.route('/reload_covid_data')
+def reload_covid_data():
+    load_covid_data()
 
 @app.route('/')
 def show_dashboard():
     return render_template('index.html', covid_data=covid_data, countries_shape=countries_shape)
 
 if __name__ == '__main__':
+
+    load_covid_data()
+
+    load_countries_shape()
+
     app.run()
     # app.run(debug=True, threaded=True, host='0.0.0.0')
