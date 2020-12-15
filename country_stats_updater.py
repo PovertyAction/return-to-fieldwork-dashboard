@@ -106,10 +106,10 @@ app = Flask(__name__)
 def update_for_new_spreadsheet_data():
 
     #Download new spreadsheet data
-    spreadsheet_data_getter.download_spreadsheet_data()
+    spreadsheet_data_getter.download_spreadsheet_data(show_prints=debugging)
 
     compute_country_stats_and_let_web_server_know()
 
 if __name__ == '__main__':
     # app.run()
-    update_for_new_covid_data()
+    update_for_new_spreadsheet_data()

@@ -6,6 +6,8 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 
+from file_names import *
+
 def get_workbook(workbook_name):
     # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds',
@@ -78,23 +80,31 @@ def save_dict_to_json_file(dict, file_name):
     with open(file_name, 'w') as fp:
         json.dump(dict, fp)
 
-def download_spreadsheet_data():
+def download_spreadsheet_data(show_prints=False):
 
-    #Get access to workbook
-    workbook =  get_workbook("Return to fieldwork")
+    try:
+        #Get access to workbook
+        workbook =  get_workbook("Return to fieldwork")
 
-    #Dictionary where to keep all collected information
-    countries_info = create_dictionary_with_countries(workbook, "Outbreak_status")
+        #Dictionary where to keep all collected information
+        countries_info = create_dictionary_with_countries(workbook, "Outbreak_status")
 
-    #Add data from different sheets in workbook
-    countries_info = add_data_from_sheet(workbook, "Outbreak_status", countries_info)
-    countries_info = add_data_from_sheet(workbook, "Govt.Instruction", countries_info)
-    countries_info = add_override_status(workbook, "Override Status", countries_info)
+        #Add data from different sheets in workbook
+        countries_info = add_data_from_sheet(workbook, "Outbreak_status", countries_info)
+        countries_info = add_data_from_sheet(workbook, "Govt.Instruction", countries_info)
+        countries_info = add_override_status(workbook, "Override Status", countries_info)
 
-    print(countries_info)
+        #Save dict to json
+        save_dict_to_json_file(countries_info, MANUAL_INPUTS_FILE)
 
-    #Save dict to json
-    save_dict_to_json_file(countries_info, 'manual_inputs.json')
+        if show_prints:
+            print('Correctly downloaded and saved country info from speadsheet')
+            # print(countries_info)
+        return True
+    except Exception as e:
+        print('Error when downloading data from spreadsheet')
+        print(e)
+        return False
 
 if __name__ == '__main__':
 
