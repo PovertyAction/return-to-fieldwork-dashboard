@@ -91,6 +91,8 @@ def download_spreadsheet_data():
     countries_info = add_data_from_sheet(workbook, "Govt.Instruction", countries_info)
     countries_info = add_override_status(workbook, "Override Status", countries_info)
 
+    print(countries_info)
+
     #Save dict to json
     save_dict_to_json_file(countries_info, 'manual_inputs.json')
 

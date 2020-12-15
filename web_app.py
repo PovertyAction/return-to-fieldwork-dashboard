@@ -10,12 +10,12 @@ countries_shape = None
 
 def load_covid_data():
     global covid_data
-    with open('covid_data_per_country.json') as f:
+    with open('data/covid_data_per_country.json') as f:
         covid_data = json.load(f)
 
 def load_countries_shape():
     global countries_shape
-    with open('countries_shape.json') as f:
+    with open('data/countries_shape.json') as f:
         countries_shape = json.load(f)
 
 @app.route('/reload_covid_data')

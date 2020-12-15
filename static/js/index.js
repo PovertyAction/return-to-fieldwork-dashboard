@@ -254,9 +254,6 @@ function CreateTable(){
         cell.appendChild(text);
 
 
-
-
-
         //Insert name of country
         cell = row.insertCell();
         text = document.createTextNode(country);
