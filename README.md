@@ -27,3 +27,7 @@ https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-sp
 # Setup
 
 `python3 web_app.py`
+
+chmod 400 aws-key-pair.pem
+
+ssh -i .\credentials\aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com
