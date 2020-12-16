@@ -71,12 +71,11 @@ def compute_country_stats(show_prints=False):
             json.dump(d, outfile)
 
         if show_prints:
-            print('Correctly computed country_stat.json')
+            print('Correctly computed country_stats.json')
         return True
 
     except Exception as e:
-        print('Error when computing coutnry_stats.json')
-        print(e)
+        print('Error when computing country_stats.json: {e}')
         return False
 
 
