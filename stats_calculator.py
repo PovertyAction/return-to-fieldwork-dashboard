@@ -1,17 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Dec 12 12:16:19 2020
-
-@author: MAli
-"""
-
 import pandas as pd
 import json
 import numpy as np
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
 
+from file_names import *
 
 def compute_country_stats(show_prints=False):
     '''
@@ -24,7 +15,7 @@ def compute_country_stats(show_prints=False):
     return True
 
     # Import csv file
-    df0 = pd.read_csv('covid_data_raw.csv', usecols= ['continent','location', 'date', 'total_cases', 'new_cases', 'new_cases_smoothed', 'positive_rate', 'population'])
+    df0 = pd.read_csv(RAW_COVID_DATA_FILE, usecols= ['continent','location', 'date', 'total_cases', 'new_cases', 'new_cases_smoothed', 'positive_rate', 'population'])
 
     # Drop other countries
     ipalist = ['Paraguay', 'Dominican Republic', 'Colombia', 'Peru', 'Mexico', 'Burkina Faso', 'Mali', 'Sierra Leone', 'Liberia', 'Ghana', "Cote d'Ivoire", 'Nigeria', 'Tanzania', 'Zambia', 'Uganda', 'Rwanda', 'Malawi', 'Kenya', 'Myanmar', 'Philippines', 'Bangladesh']
@@ -35,8 +26,6 @@ def compute_country_stats(show_prints=False):
 
 
     # First step calculation
-    g = df.groupby('location')
-
     aggregations = {
         "new_cases": [lambda t: t.head(3).mean(), lambda t: t.head(7).mean()],
         "new_cases_smoothed": [lambda t: t.iloc[7].mean()],
@@ -74,7 +63,15 @@ def compute_country_stats(show_prints=False):
     # Final output
     caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000']]
     caldata = caldata.applymap(str)
-    caldata.to_json('country_stats.json', orient='records', lines=False)
+    
+    # Creating dictionary and exporting json
+    caldata.set_index(['location'], inplace = True )
+    d=caldata.to_dict('index')
+    with open(COUNTRY_STATS_FILE, "w") as outfile:  
+        json.dump(d, outfile)
+    
+   
 
 if __name__ == '__main__':
     compute_country_stats()
+
