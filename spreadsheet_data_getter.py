@@ -5,19 +5,19 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
-
 from file_names import *
+import warnings
 
-def get_workbook(workbook_name):
+
+
+def get_gspread_client():
     # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
 
     creds = ServiceAccountCredentials.from_json_keyfile_name(GSHEETS_CREDENTIALS, scope)
     client = gspread.authorize(creds)
-
-    workbook = client.open(workbook_name)
-    return workbook
+    return client
 
 
 def create_dictionary_with_countries(workbook, sheet_name):
@@ -80,11 +80,15 @@ def save_dict_to_json_file(dict, file_name):
     with open(file_name, 'w') as fp:
         json.dump(dict, fp)
 
-def download_spreadsheet_data(show_prints=False):
+def download_spreadsheet_data(workbook_name, show_prints=False):
+
+    #Removing gspread warnings
+    warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
     try:
         #Get access to workbook
-        workbook =  get_workbook("Return to fieldwork")
+        client = get_gspread_client()
+        workbook = client.open(workbook_name)
 
         #Dictionary where to keep all collected information
         countries_info = create_dictionary_with_countries(workbook, "Outbreak_status")
@@ -100,6 +104,8 @@ def download_spreadsheet_data(show_prints=False):
         if show_prints:
             print('Correctly downloaded and saved country info from speadsheet')
             # print(countries_info)
+
+        # client.close()
         return True
     except Exception as e:
         print('Error when downloading data from spreadsheet')
@@ -108,4 +114,4 @@ def download_spreadsheet_data(show_prints=False):
 
 if __name__ == '__main__':
 
-    download_spreadsheet_data()
+    download_spreadsheet_data("Return to fieldwork")
