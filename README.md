@@ -24,10 +24,33 @@ Internally, this will call:
 
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html -->
 
-# Setup
 
+
+# Setting up aws server
+
+Copy google sheets secret key to server
+`scp -i credentials/aws-key-pair.pem client_secret.json ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com:/home/ubuntu`
+
+ssh to ec2 instance
+`chmod 400 credentials/aws-key-pair.pem`
+`ssh -i credentials/aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com`
+
+`sudo apt update`
+
+`sudo apt install python3-pip`
+
+`github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
+
+`pip3 install -r requirements.txt`
+
+install tmux (only first time)
+`sudo apt install tmux`
+
+## Setting up web app
+
+create a tmux session for the web app and run in
+`tmux web_app`
 `python3 web_app.py`
 
-chmod 400 aws-key-pair.pem
-
-ssh -i .\credentials\aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com
+Remember to enable TCP calls from anywhere to port 5000 in aws security group associated to this instance.
+Rule: Custom TCP	TCP	5000 Anywhere
