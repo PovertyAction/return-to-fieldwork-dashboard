@@ -5,9 +5,6 @@ import numpy as np
 
 app = Flask(__name__)
 
-covid_data = None
-countries_shape = None
-
 def load_covid_data():
     global covid_data
     with open('data/covid_data_per_country.json') as f:
@@ -27,13 +24,12 @@ def show_dashboard():
     return render_template('index.html', covid_data=covid_data, countries_shape=countries_shape)
 
 if __name__ == '__main__':
-
+    print('Starting server')
     load_covid_data()
 
     load_countries_shape()
 
-    app.run()
-    # app.run(debug=True, threaded=True, host='0.0.0.0')
+    app.run(debug=True, threaded=True, host='0.0.0.0', port='5000')
 
 
 '''
