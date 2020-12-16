@@ -1,8 +1,11 @@
 import pandas as pd
 import json
 import numpy as np
-
+import warnings
 from file_names import *
+
+#Set warnings as errors
+warnings.filterwarnings("error")
 
 def compute_country_stats(show_prints=False):
     '''
