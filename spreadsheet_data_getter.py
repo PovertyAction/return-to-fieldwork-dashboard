@@ -13,7 +13,7 @@ def get_workbook(workbook_name):
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(GSHEET_CREDENTIALS, scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(GSHEETS_CREDENTIALS, scope)
     client = gspread.authorize(creds)
 
     workbook = client.open(workbook_name)
