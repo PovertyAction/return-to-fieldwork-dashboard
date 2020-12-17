@@ -47,7 +47,7 @@ def compute_country_stats(show_prints=False):
         # Second step calculation
         caldata["growthrate"] = (caldata['caseavg_7day'] - caldata['caseavg_7dayprev']) *100 / caldata['caseavg_7dayprev']
         caldata["cases_per_100000"] = caldata['total_cases_max']*100000 / caldata['population']
-        caldata["douberate"] = (np.log(2) / np.log((1 + caldata['growthrate']/100))).where((caldata.location.str.contains("Paraguay")) 
+        caldata["douberate"] = (np.log(2) / np.log((1 + caldata['growthrate']/100))).where((caldata.location.str.contains("Paraguay"))
                                                 | (caldata.location.str.contains("Dominican Republic")),
                                                 (7*70 / caldata['growthrate']))
         caldata["douberate"] = caldata["douberate"].fillna(0)
@@ -55,17 +55,17 @@ def compute_country_stats(show_prints=False):
         caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
         caldata["status_casepop"] = caldata["cases_per_100000"].apply(lambda x : 1 if x < 50 else 0)
         caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.status_casepop.map(str)
-        
+
         # Third step - dashboard
         caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else round(x, 1))
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
         caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
-        
+
         # Final output
         caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000']]
         caldata = caldata.applymap(str)
-        
+
         # Creating dictionary and exporting json
         caldata.set_index(['location'], inplace = True )
         d=caldata.to_dict('index')
@@ -78,11 +78,11 @@ def compute_country_stats(show_prints=False):
 
     except Exception as e:
         print(f'Error when computing country_stats.json: {e}')
-        return True# Should be false, changed to True so keep testing whole system flow
+        return False
 
 
 if __name__ == '__main__':
-    compute_country_stats()
-    
-    
+    compute_country_stats(show_prints=True)
+
+
 #EOF
