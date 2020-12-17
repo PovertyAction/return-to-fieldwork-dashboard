@@ -2,9 +2,6 @@
 //* https://leafletjs.com/examples/choropleth/
 
 
-console.log('covid_data');
-console.log(covid_data);
-
 CreateMap();
 CreateTable();
 
@@ -36,13 +33,13 @@ function CreateMap(){
       for (var i = 0; i < countries_shape.features.length; i++) {
         country_name = countries_shape.features[i].properties.name;
 
-        if (country_name in covid_data) {
-            countries_shape.features[i].properties.status = covid_data[country_name].status;
-            countries_shape.features[i].properties.new_cases = covid_data[country_name].new_cases;
-            countries_shape.features[i].properties.doubling_rate = covid_data[country_name].doubling_rate;
-            countries_shape.features[i].properties.cases_per_100000 = covid_data[country_name].cases_per_100000;
-            countries_shape.features[i].properties.government_restrictions = covid_data[country_name].government_restrictions;
-            countries_shape.features[i].properties.subnational_outbreak_status = covid_data[country_name].subnational_outbreak_status;
+        if (country_name in country_stats) {
+            countries_shape.features[i].properties.status = country_stats[country_name].status;
+            countries_shape.features[i].properties.new_cases = country_stats[country_name].new_cases;
+            countries_shape.features[i].properties.doubling_rate = country_stats[country_name].doubling_rate;
+            countries_shape.features[i].properties.cases_per_100000 = country_stats[country_name].cases_per_100000;
+            countries_shape.features[i].properties.government_restrictions = country_stats[country_name].government_restrictions;
+            countries_shape.features[i].properties.subnational_outbreak_status = country_stats[country_name].subnational_outbreak_status;
         }
       }
 
@@ -223,22 +220,22 @@ function CreateTable(){
 
     }
 
-    function generateTable(table, covid_data) {
+    function generateTable(table, country_stats) {
 
       let odd_region=false;
 
       //For every country
-      for (let country of Object.keys(covid_data)) {
+      for (let country of Object.keys(country_stats)) {
         //Create row
         let row = table.insertRow();
 
-        row.style.background = getColor(covid_data[country].status);
+        row.style.background = getColor(country_stats[country].status);
 
         //Insert region of country
         let cell = row.insertCell();
 
         //Paint region cell differently if region changed respect to previous one
-        region = covid_data[country]['region'];
+        region = country_stats[country]['region'];
         if(region!=""){
             odd_region = !odd_region;
         }
@@ -250,7 +247,7 @@ function CreateTable(){
             cell.style.colspan="2";
         }
 
-        let text = document.createTextNode(covid_data[country]['region']);
+        let text = document.createTextNode(country_stats[country]['region']);
         cell.appendChild(text);
 
 
@@ -263,7 +260,7 @@ function CreateTable(){
         for (let key of ["new_cases", "doubling_rate","cases_per_100000","government_restrictions","subnational_outbreak_status"]) {
             console.log(key);
             let cell = row.insertCell();
-            let text = document.createTextNode(covid_data[country][key]);
+            let text = document.createTextNode(country_stats[country][key]);
             cell.appendChild(text);
         }
       }
@@ -271,6 +268,6 @@ function CreateTable(){
 
     let table = document.querySelector("table");
 
-    generateTable(table, covid_data);
+    generateTable(table, country_stats);
     generateTableHead(table, ['Region','Country', 'New cases per day','Case doubling rate','Cases per 100,000 people', 'Government restrictions', 'Subnational outbreak status']);
 }
