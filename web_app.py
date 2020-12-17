@@ -34,9 +34,8 @@ def show_dashboard():
     return render_template('index.html', covid_data=covid_data, countries_shape=countries_shape)
 
 if __name__ == '__main__':
-    print('Starting server')
+    print('Starting web_app')
     load_covid_data()
-
     load_countries_shape()
-
-    app.run(debug=True, threaded=True, host='0.0.0.0', port='5000')
+    # app.run()
+    app.run(host='0.0.0.0', port='5000')#debug=True, threaded=True,
