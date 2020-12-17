@@ -77,7 +77,7 @@ def compute_country_stats(show_prints=False):
         return True
 
     except Exception as e:
-        print('Error when computing country_stats.json: {e}')
+        print(f'Error when computing country_stats.json: {e}')
         return False
 
 

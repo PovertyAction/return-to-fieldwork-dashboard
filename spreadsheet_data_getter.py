@@ -102,13 +102,13 @@ def download_spreadsheet_data(workbook_name, show_prints=False):
         save_dict_to_json_file(countries_info, MANUAL_INPUTS_FILE)
 
         if show_prints:
-            print('Correctly downloaded and saved country info from speadsheet')
+            print('Correctly downloaded and saved manual_inputs from speadsheet')
             # print(countries_info)
 
         # client.close()
         return True
     except Exception as e:
-        print('Error when downloading data from spreadsheet')
+        print('Error when downloading manual_inputs from spreadsheet')
         print(e)
         return False
 
