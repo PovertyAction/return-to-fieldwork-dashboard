@@ -17,6 +17,7 @@ def load_countries_shape():
 
 @app.route('/reload_covid_data')
 def reload_covid_data():
+    print('Reloading covid data')
     load_covid_data()
 
 @app.route('/')

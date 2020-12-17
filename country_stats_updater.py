@@ -1,4 +1,5 @@
 from flask import Flask
+import requests
 
 #Dashboard modules
 import md5_generator
@@ -19,9 +20,16 @@ def update_web_server_country_stats():
     '''
     Call webserver endpoint to update its country stats
     '''
-    #PENDING
-    print_if_debugging('update_web_server_country_stats() PENDING')
-    return None
+    try:
+        response = requests.get('http://ec2-18-217-4-44.us-east-2.compute.amazonaws.com:5000/reload_covid_data')
+        print_if_debugging('Called web server so country_stats.json is updated')
+        print(response)
+        return True
+    except Exception as e:
+        print('Error when calling web server for country_stats.json update')
+        print(e)
+        return False
+
 
 
 def compute_country_stats_and_let_web_server_know():
@@ -112,4 +120,4 @@ def update_for_new_spreadsheet_data():
 
 if __name__ == '__main__':
     # app.run()
-    update_for_new_spreadsheet_data()
+    update_for_new_covid_data()
