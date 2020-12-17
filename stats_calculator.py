@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import numpy as np
 import warnings
+np.seterr(divide = 'ignore')
 from file_names import *
 
 #Set warnings as errors
@@ -19,10 +20,10 @@ def compute_country_stats(show_prints=False):
 
         # Drop other countries
         ipalist = ['Paraguay', 'Dominican Republic', 'Colombia', 'Peru', 'Mexico', 'Burkina Faso', 'Mali', 'Sierra Leone', 'Liberia', 'Ghana', "Cote d'Ivoire", 'Nigeria', 'Tanzania', 'Zambia', 'Uganda', 'Rwanda', 'Malawi', 'Kenya', 'Myanmar', 'Philippines', 'Bangladesh']
-        df = df0[df0.location.isin(ipalist)]
+        df1 = df0[df0.location.isin(ipalist)]
 
         # Sort by date
-        df.sort_values(['location', 'date'], ascending=[True, False], inplace=True)
+        df = df1.sort_values(['location', 'date'], ascending=[True, False])
 
 
         # First step calculation
@@ -46,24 +47,25 @@ def compute_country_stats(show_prints=False):
         # Second step calculation
         caldata["growthrate"] = (caldata['caseavg_7day'] - caldata['caseavg_7dayprev']) *100 / caldata['caseavg_7dayprev']
         caldata["cases_per_100000"] = caldata['total_cases_max']*100000 / caldata['population']
-        caldata["douberate"] = pd.np.where((caldata.location.str.contains("Paraguay")) | (caldata.location.str.contains("Dominican Republic")),
-                                              (np.log(2) / np.log((1 + caldata['growthrate']/100))), (7*70 / caldata['growthrate']))
+        caldata["douberate"] = (np.log(2) / np.log((1 + caldata['growthrate']/100))).where((caldata.location.str.contains("Paraguay")) 
+                                                | (caldata.location.str.contains("Dominican Republic")),
+                                                (7*70 / caldata['growthrate']))
         caldata["douberate"] = caldata["douberate"].fillna(0)
-        caldata["status_3day"] =  np.where(caldata['caseavg_3day']<100, 1, 0)
-        caldata["status_dbl"] =  np.where((caldata['douberate'] >=10) | (caldata['douberate']<=0), 1, 0)
-        caldata["status_casepop"] =  np.where((caldata['cases_per_100000'] <50), 1, 0)
+        caldata["status_3day"] = caldata["caseavg_3day"].apply(lambda x : 1 if x < 100 else 0)
+        caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
+        caldata["status_casepop"] = caldata["cases_per_100000"].apply(lambda x : 1 if x < 50 else 0)
         caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.status_casepop.map(str)
-
+        
         # Third step - dashboard
-        caldata["case_doubling_rate"] =  np.where((caldata["douberate"]<0) | (caldata["douberate"]>100), '>100', (caldata["douberate"].round()))
-        caldata["new_cases_per_day"] = caldata['caseavg_3day'].astype(int)
-        caldata['status'] = np.where(caldata.statuscode.str.contains("111"), "Yellow", "Red")
+        caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else round(x, 1))
+        caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
+        caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
-
+        
         # Final output
         caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000']]
         caldata = caldata.applymap(str)
-
+        
         # Creating dictionary and exporting json
         caldata.set_index(['location'], inplace = True )
         d=caldata.to_dict('index')
@@ -81,3 +83,6 @@ def compute_country_stats(show_prints=False):
 
 if __name__ == '__main__':
     compute_country_stats()
+    
+    
+#EOF
