@@ -37,5 +37,4 @@ if __name__ == '__main__':
     print('Starting web_app')
     load_covid_data()
     load_countries_shape()
-    # app.run()
-    app.run(host='0.0.0.0', port='5000')#debug=True, threaded=True,
+    app.run(host='0.0.0.0', port='5000')
