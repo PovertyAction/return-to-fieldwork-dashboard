@@ -12,11 +12,11 @@ def load_covid_data(show_prints=False):
             covid_data = json.load(f)
         if show_prints:
             print('Correctly loaded covid_data_per_country.json [NEED TO CHANGE THIS TO country_stats.json]')
-        return True
+        return 'True'
     except Exception as e:
         print('Error when downloading covid_data_per_country/country_stats.json')
         print(e)
-        return False
+        return 'False'
 
 def load_countries_shape():
     global countries_shape
