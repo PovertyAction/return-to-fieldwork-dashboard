@@ -33,6 +33,7 @@ Copy google sheets secret key to server
 
 ssh to ec2 instance
 `chmod 400 credentials/aws-key-pair.pem`
+
 `ssh -i credentials/aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com`
 
 `sudo apt update`
@@ -60,11 +61,17 @@ Rule: Custom TCP	TCP	5000 Anywhere
 https://www.howtogeek.com/101288/how-to-schedule-tasks-on-linux-an-introduction-to-crontab-files/#:~:text=The%20cron%20daemon%20on%20Linux,automatically%20run%20them%20for%20you.
 
 
-## Setting up spreadsheet_data_update
+## Setting up spreadsheet_data_updater
 
+Setup cron to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
 ```
 crontab -e
-
+#Write down in the end of the crontab file the following line:
+0 */8 * * * /usr/bin/python3 /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater.py >> /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater_log.txt
+```
+You can check what has crontab run with:
+```
+tail /var/log/syslog
 ```
 
 Remember to use absolute routes
