@@ -2,6 +2,7 @@ from flask import Flask
 import spreadsheet_data_getter
 import server_updater
 import stats_calculator
+import sys
 
 debugging=True
 
