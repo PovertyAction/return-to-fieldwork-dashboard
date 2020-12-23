@@ -1,11 +1,15 @@
 #NAME OF FILES
+import os
 
-HASH_COVID_DATA_FILE = 'data/covid_data_md5.txt'
+def get_abs_path(relative_path):
+   return os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),relative_path))
 
-RAW_COVID_DATA_FILE = 'data/covid_data_raw.csv'
+HASH_COVID_DATA_FILE = get_abs_path('./data/covid_data_md5.txt')
 
-MANUAL_INPUTS_FILE = 'data/manual_inputs.json'
+RAW_COVID_DATA_FILE = get_abs_path('./data/covid_data_raw.csv')
 
-GSHEETS_CREDENTIALS = 'credentials/client_secret.json'
+MANUAL_INPUTS_FILE = get_abs_path('./data/manual_inputs.json')
 
-COUNTRY_STATS_FILE = 'data/country_stats.json'
+GSHEETS_CREDENTIALS = get_abs_path('./credentials/client_secret.json')
+
+COUNTRY_STATS_FILE = get_abs_path('./data/country_stats.json')

@@ -6,6 +6,8 @@ import stats_calculator
 import server_updater
 import sys
 from file_names import * #Import all file names
+import os
+from datetime import datetime
 
 debugging = True
 
@@ -61,6 +63,9 @@ def update_for_new_covid_data():
 
     A scheduler should run this process every 8 hours
     '''
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(f'Current Time ={current_time}', file=sys.stdout)
 
     #Download new copy
     covid_data_getter.download_covid_data(show_prints=debugging)
