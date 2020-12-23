@@ -1,9 +1,10 @@
 import requests
+import sys
 
 debugging=True
 def print_if_debugging(text):
     if debugging:
-        print(text)
+        print(text, file=sys.stdout)
 
 def update_web_server_country_stats():
     '''

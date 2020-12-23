@@ -1,5 +1,6 @@
 #External modules
 import hashlib
+import sys
 
 def get_file_md5(fname, show_prints):
     #Reference: https://stackoverflow.com/questions/3431825/generating-an-md5-checksum-of-a-file
@@ -9,5 +10,5 @@ def get_file_md5(fname, show_prints):
             hash_md5.update(chunk)
     hash_value = hash_md5.hexdigest()
     if show_prints:
-        print(f'Hash value generated. Hash {hash_value}')
+        print(f'Hash value generated. Hash {hash_value}', file=sys.stdout)
     return hash_value

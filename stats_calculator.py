@@ -4,7 +4,7 @@ import numpy as np
 import warnings
 np.seterr(divide = 'ignore')
 from file_names import *
-
+import sys
 #Set warnings as errors
 warnings.filterwarnings("error")
 
@@ -73,11 +73,11 @@ def compute_country_stats(show_prints=False):
             json.dump(d, outfile)
 
         if show_prints:
-            print('Correctly computed country_stats.json')
+            print('Correctly computed country_stats.json', file=sys.stdout)
         return True
 
     except Exception as e:
-        print(f'Error when computing country_stats.json: {e}')
+        print(f'Error when computing country_stats.json: {e}', file=sys.stdout)
         return False
 
 

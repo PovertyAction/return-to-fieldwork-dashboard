@@ -4,13 +4,14 @@ import covid_data_getter
 import spreadsheet_data_getter
 import stats_calculator
 import server_updater
+import sys
 from file_names import * #Import all file names
 
 debugging = True
 
 def print_if_debugging(text):
     if debugging:
-        print(text)
+        print(text, file=sys.stdout)
 
 def get_hash_old_covid_data():
     #Open file that keeps track of covid_data_hash
@@ -21,7 +22,7 @@ def get_hash_old_covid_data():
         print_if_debugging(f'Read {HASH_COVID_DATA_FILE} hash: {hash}')
         return hash
     except Exception as e:
-        print(e)
+        print(e, file=sys.stdout)
         return False
 
 def save_new_covid_data_hash(hash_new_covid_data):
@@ -32,8 +33,8 @@ def save_new_covid_data_hash(hash_new_covid_data):
         print_if_debugging(f'Hash {hash_new_covid_data} written to {HASH_COVID_DATA_FILE}')
         return True
     except Exception as e:
-        print('Error when saving new hash value')
-        print(e)
+        print('Error when saving new hash value', file=sys.stdout)
+        print(e, file=sys.stdout)
         return False
 
 

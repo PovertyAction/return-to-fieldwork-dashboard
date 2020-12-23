@@ -54,3 +54,20 @@ create a tmux session for the web app and run in
 
 Remember to enable TCP calls from anywhere to port 5000 in aws security group associated to this instance.
 Rule: Custom TCP	TCP	5000 Anywhere
+
+## Setting up covid_data_updater
+
+https://www.howtogeek.com/101288/how-to-schedule-tasks-on-linux-an-introduction-to-crontab-files/#:~:text=The%20cron%20daemon%20on%20Linux,automatically%20run%20them%20for%20you.
+
+
+## Setting up spreadsheet_data_update
+
+```
+crontab -e
+
+```
+
+Remember to use absolute routes
+
+Remember to enable TCP calls from anywhere to port 5002 in aws security group associated to this instance.
+Rule: Custom TCP	TCP	5002 Anywhere

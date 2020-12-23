@@ -31,5 +31,5 @@ def update_for_new_spreadsheet_data():
 
 
 if __name__ == '__main__':
-    print('Starting new_spreadsheet_data listener')
+    print('Starting new_spreadsheet_data listener', file=sys.stdout)
     app.run(host='0.0.0.0', port='5002')

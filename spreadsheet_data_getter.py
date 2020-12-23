@@ -7,7 +7,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import json
 from file_names import *
 import warnings
-
+import sys
 
 
 def get_gspread_client():
@@ -102,14 +102,14 @@ def download_spreadsheet_data(workbook_name, show_prints=False):
         save_dict_to_json_file(countries_info, MANUAL_INPUTS_FILE)
 
         if show_prints:
-            print('Correctly downloaded and saved manual_inputs from speadsheet')
+            print('Correctly downloaded and saved manual_inputs from speadsheet', file=sys.stdout)
             # print(countries_info)
 
         # client.close()
         return True
     except Exception as e:
-        print('Error when downloading manual_inputs from spreadsheet')
-        print(e)
+        print('Error when downloading manual_inputs from spreadsheet', file=sys.stdout)
+        print(e, file=sys.stdout)
         return False
 
 if __name__ == '__main__':

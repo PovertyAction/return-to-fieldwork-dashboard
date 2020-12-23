@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import pandas as pd
 import json
 import numpy as np
+import sys
 
 app = Flask(__name__)
 
@@ -11,11 +12,11 @@ def load_country_stats(show_prints=False):
         with open('data/country_stats.json') as f:
             country_stats = json.load(f)
         if show_prints:
-            print('Correctly loaded country_stats')
+            print('Correctly loaded country_stats', file=sys.stdout)
         return 'True'
     except Exception as e:
-        print('Error when downloading country_stats.json')
-        print(e)
+        print('Error when downloading country_stats.json', file=sys.stdout)
+        print(e, file=sys.stdout)
         return 'False'
 
 def load_countries_shape():
@@ -34,7 +35,7 @@ def show_dashboard():
     return render_template('index.html', country_stats=country_stats, countries_shape=countries_shape)
 
 if __name__ == '__main__':
-    print('Starting web_app')
+    print('Starting web_app', file=sys.stdout)
     load_country_stats()
     load_countries_shape()
     app.run(host='0.0.0.0', port='5000')
