@@ -249,6 +249,8 @@ function CreateTable() {
   function generateTable(table, country_stats) {
     let odd_region = false;
 
+    console.log(country_stats);
+
     //For every country
     for (let country of Object.keys(country_stats)) {
       //Create row
@@ -259,17 +261,18 @@ function CreateTable() {
       //Insert region of country
       let cell = row.insertCell();
 
+      //Comenting code. We might want to put it back later.
       //Paint region cell differently if region changed respect to previous one
-      region = country_stats[country]["region"];
-      if (region != "") {
-        odd_region = !odd_region;
-      }
-      if (odd_region) {
-        cell.style.background = "#81B53C";
-      } else {
-        cell.style.background = "#D9EAD3";
-        cell.style.colspan = "2";
-      }
+      //region = country_stats[country]["region"];
+      //if (region != "") {
+      //  odd_region = !odd_region;
+      //}
+      //if (odd_region) {
+      //  cell.style.background = "#81B53C";
+      //} else {
+      //  cell.style.background = "#D9EAD3";
+      //  cell.style.colspan = "2";
+      //}
 
       let text = document.createTextNode(country_stats[country]["region"]);
       cell.appendChild(text);
