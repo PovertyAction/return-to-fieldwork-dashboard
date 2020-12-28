@@ -204,11 +204,11 @@ function CreateMap() {
 
 // Function to get color of country based on status
 function getColor(status) {
-  return status == "red"
+  return status == "Red"
     ? "#CA3433"
-    : status == "yellow"
+    : status == "Yellow"
     ? "#E89423"
-    : status == "green"
+    : status == "Green"
     ? "#81B53C"
     : "#FFFFFF"; //#CDCDCD
 }
