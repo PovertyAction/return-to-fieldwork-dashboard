@@ -258,7 +258,6 @@ function CreateTable(){
 
         //Insert each info of the country
         for (let key of ["new_cases", "doubling_rate","cases_per_100000","government_restrictions","subnational_outbreak_status"]) {
-            console.log(key);
             let cell = row.insertCell();
             let text = document.createTextNode(country_stats[country][key]);
             cell.appendChild(text);
