@@ -89,6 +89,11 @@ def compute_country_stats(show_prints=False):
                                }
                             , inplace = True)
         data = data.replace(np.nan, '')
+
+        #Remove non-printable chars from columns, given thay are hard to 
+        for col in ['status', 'government_restrictions', 'subnational_outbreak_status']:           
+            data[col] = data[col].apply(lambda x: ''.join([" " if ord(i) < 32 or ord(i) > 126 else i for i in x]))
+
         
         # Creating dictionary and exporting json
         data.set_index(['location'], inplace = True )
