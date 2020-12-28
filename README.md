@@ -5,6 +5,7 @@ Every 8 hours:
 Scheduler will run country_stats_updater.update_for_new_covid_data()
 
 Internally, this will call:
+
 - covid_data_getter.download_covid_data()
 - stats_calculator.compute_country_stats()
 - update_web_server_country_stats()
@@ -14,6 +15,7 @@ Internally, this will call:
 Whenever there is a change in the spreadsheet, aka, someone manually wrote information, we will trigget a call to country_stats_updater.update_for_spreadsheet_data()
 
 Internally, this will call:
+
 - spreadsheet_data_getter.download_spreadsheet_data()
 - stats_calculator.compute_country_stats()
 - update_web_server_country_stats()
@@ -23,8 +25,6 @@ Internally, this will call:
 ## pull_spreadsheet_data.py
 
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html -->
-
-
 
 # Setting up aws server
 
@@ -40,6 +40,14 @@ ssh to ec2 instance
 
 `sudo apt install python3-pip`
 
+`sudo apt-get install python3-venv`
+
+`python3 -m venv venv`
+
+`source venv/bin/activate`
+
+`pip3 install -r requirements.txt`
+
 `github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
 
 `pip3 install -r requirements.txt`
@@ -54,22 +62,24 @@ create a tmux session for the web app and run in
 `python3 web_app.py`
 
 Remember to enable TCP calls from anywhere to port 5000 in aws security group associated to this instance.
-Rule: Custom TCP	TCP	5000 Anywhere
+Rule: Custom TCP TCP 5000 Anywhere
 
 ## Setting up covid_data_updater
 
 https://www.howtogeek.com/101288/how-to-schedule-tasks-on-linux-an-introduction-to-crontab-files/#:~:text=The%20cron%20daemon%20on%20Linux,automatically%20run%20them%20for%20you.
 
-
 ## Setting up spreadsheet_data_updater
 
 Setup cron to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
+
 ```
 crontab -e
 #Write down in the end of the crontab file the following line:
 0 */8 * * * /usr/bin/python3 /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater.py >> /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater_log.txt
 ```
+
 You can check what has crontab run with:
+
 ```
 tail /var/log/syslog
 ```
@@ -77,4 +87,4 @@ tail /var/log/syslog
 Remember to use absolute routes
 
 Remember to enable TCP calls from anywhere to port 5002 in aws security group associated to this instance.
-Rule: Custom TCP	TCP	5002 Anywhere
+Rule: Custom TCP TCP 5002 Anywhere
