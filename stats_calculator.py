@@ -65,9 +65,23 @@ def compute_country_stats(show_prints=False):
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
         caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "1111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
+        caldata['link_local_data'] =  caldata["location"].apply(lambda x : "https://covid19.health.gov.mw/" if x == "Malawi" else 
+                                                        ("https://covid19.gou.go.ug/" if x == "Uganda" else
+                                                         ("https://www.sig.gov.bf/infos-covid-19" if x == "Burkina Faso" else
+                                                          ("http://info-covid19.gouv.ci/" if x == "Cote d'Ivoire" else
+                                                           ("https://ghanahealthservice.org/covid19/" if x == "Ghana" else
+                                                            ("https://covid19.ncdc.gov.ng/report/" if x == "Nigeria" else 
+                                                             ("https://sl.one.un.org/covid-19-sitreps/" if x == "Sierra Leone" else
+                                                              ("https://corona.gov.bd/" if x == "Bangladesh" else 
+                                                               ("https://mohs.gov.mm/Main/content/publication/2019-ncov" if x == "Myanmar" else
+                                                                ("https://www.doh.gov.ph/covid19tracker" if x == "Philippines" else 
+                                                                 ("https://www.ins.gov.co/Noticias/Paginas/coronavirus-casos.aspx" if x == "Colombia" else
+                                                                  ("https://coronavirus.gob.mx/datos/" if x == "Mexico" else 
+                                                                   "https://covid19.minsa.gob.pe/sala_situacional.asp" if x == "Peru" else ""))))))))))))
+        
         
         # Final output
-        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000']]
+        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000', 'link_local_data']]
         caldata = caldata.applymap(str)
         
         
