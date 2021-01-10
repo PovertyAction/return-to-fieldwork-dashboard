@@ -33,15 +33,17 @@ def compute_country_stats(show_prints=False):
             "date": "first",
             "population": "first",
             'total_cases': "max",
-            'continent': "first"
+            'continent': "first",
+            'positive_rate': "first"
         }
         
         caldata = df.groupby('location', as_index=False).agg(aggregations)
         
         # Rename columns
         caldata.columns = ["_".join(x) for x in caldata.columns.ravel()]
-        caldata.rename(columns = {'new_cases_<lambda_0>': 'caseavg_3day', 'new_cases_<lambda_1>': 'caseavg_7day', 'new_cases_smoothed_<lambda>': 'caseavg_7dayprev',
-                                  'date_first': 'date', 'population_first': 'population', 'location_':'location', 'continent_first':'region'},
+        caldata.rename(columns = {'new_cases_<lambda_0>': 'caseavg_3day', 'new_cases_<lambda_1>': 'caseavg_7day', 
+                                  'new_cases_smoothed_<lambda>': 'caseavg_7dayprev', 'date_first': 'date', 'population_first': 'population', 
+                                  'location_':'location', 'continent_first':'region', 'positive_rate_first':'positive_rate'},
                                   inplace = True)
         
         # Second step calculation
@@ -54,12 +56,14 @@ def compute_country_stats(show_prints=False):
         caldata["status_3day"] = caldata["caseavg_3day"].apply(lambda x : 1 if x < 100 else 0)
         caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
         caldata["status_casepop"] = caldata["cases_per_100000"].apply(lambda x : 1 if x < 50 else 0)
-        caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.status_casepop.map(str)
+        caldata["positive_rate_dum"] = caldata["positive_rate"].apply(lambda x : 0 if (x > 0.005) else 1)
+        caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.status_casepop.map(str) + caldata.positive_rate_dum.map(str) 
+        
         
         # Third step - dashboard
         caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else round(x, 1))
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
-        caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "111" else "Red")
+        caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "1111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
         
         # Final output
