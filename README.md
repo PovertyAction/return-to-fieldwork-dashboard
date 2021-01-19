@@ -38,44 +38,69 @@ Internally, this will call:
 
 ### Setting up aws server
 
-Copy google sheets secret key to server
+Log in to aws console and launch an ubuntu ec2 instance
+
+Copy google sheets secret key to server, which will allow the system to query g sheets
+
 `scp -i credentials/aws-key-pair.pem client_secret.json ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com:/home/ubuntu`
 
-ssh to ec2 instance
+ssh to ec2 instance (previously changing permissions on .pem file)
+
 `chmod 400 credentials/aws-key-pair.pem`
+
 `ssh -i credentials/aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com`
 
 Install dependencies in server
+
 `sudo apt update`
+
 `sudo apt install python3-pip`
+
 `sudo apt-get install python3-venv`
-`python3 -m venv venv`
-`source venv/bin/activate`
-`pip3 install -r requirements.txt`
+
+Clone repo, create virtual environment and install project dependencies
+
 `github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
+
+`python3 -m venv venv`
+
+`source venv/bin/activate`
+
 `pip3 install -r requirements.txt`
+
 `sudo apt install tmux`
 
 ### Setting up sessions for each component using tmux
 
 #### web app
+
+Crete web app tmux session
+
 `tmux new -s web_app`
+
+Launch web app
+
 `python3 web_app.py`
 
-Enable TCP calls from anywhere to port 5000 in aws security group associated to this instance.
+Enable TCP calls from anywhere to port 5000 (which is the one web_app.py uses) in aws security group associated to this instance.
 Rule: Custom TCP TCP 5000 Anywhere
 
 ## spreadsheet data updater
 
+Create tmux session
+
 `tmux new -s spreadsheet_data_updater`
+
+Launch spreadsheet data updater
+
 `python3 spreadsheet_data_updater.py`
 
-Remember to enable TCP calls from anywhere to port 5002 in aws security group associated to this instance.
+Remember to enable TCP calls from anywhere to port 5002 (which is the one spreadsheed_data_updater.py uses) in aws security group associated to this instance.
 Rule: Custom TCP TCP 5002 Anywhere
 
 ## covid data updater
 
-Setup cron to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
+Setup [cron](https://opensource.com/article/17/11/how-use-cron-linux) to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
 
 ```
 crontab -e
