@@ -34,8 +34,9 @@ def reload_covid_data():
 def show_dashboard():
     return render_template('index.html', country_stats=country_stats, countries_shape=countries_shape)
 
+load_country_stats()
+load_countries_shape()
+
 if __name__ == '__main__':
     print('Starting web_app', file=sys.stdout)
-    load_country_stats()
-    load_countries_shape()
     app.run(host='0.0.0.0', port='5000')

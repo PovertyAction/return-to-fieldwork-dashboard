@@ -11,7 +11,7 @@ def update_web_server_country_stats():
     Call webserver endpoint to update its country stats
     '''
     try:
-        response = requests.get('http://ec2-18-217-4-44.us-east-2.compute.amazonaws.com:5000/reload_country_stats')
+        response = requests.get('http://ec2-18-217-4-44.us-east-2.compute.amazonaws.com:80/reload_country_stats')
         if response.status_code==200:
            print_if_debugging(f'Succes in updating country_stats.json in server. Response {response.text}')
            return True
