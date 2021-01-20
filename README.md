@@ -1,4 +1,18 @@
-# Update country_stats for new covid data
+# Return to field work dashboard
+
+Website that present IPA country status for returning to field work.
+
+The system has 3 main components:
+
+* A website that presents the dashboard based on already computed country_stats.json
+* A process that collects covid data every 8 hours and re computes country_stats.json
+* A process that captures changes in a spreadsheet where users can input data which overrides country_stats.json
+
+## System overview
+
+![](system_components_diagram.png)
+
+### covid data updater
 
 Every 8 hours:
 
@@ -10,9 +24,9 @@ Internally, this will call:
 - stats_calculator.compute_country_stats()
 - update_web_server_country_stats()
 
-# Update country_stats for new manual inputs
+### spreadsheet data updater
 
-Whenever there is a change in the spreadsheet, aka, someone manually wrote information, we will trigget a call to country_stats_updater.update_for_spreadsheet_data()
+Whenever there is a change in [this](https://docs.google.com/spreadsheets/d/1xvFTrmbjrJbYDHKej_AsEcCWEwsM7JCGxCdzYPZRQgk/edit#gid=1855212233) spreadsheet, aka, someone manually wrote information, we will trigget a call to country_stats_updater.update_for_spreadsheet_data()
 
 Internally, this will call:
 
@@ -20,21 +34,23 @@ Internally, this will call:
 - stats_calculator.compute_country_stats()
 - update_web_server_country_stats()
 
-<!-- # Modules
+## Setup
 
-## pull_spreadsheet_data.py
+### Setting up aws server
 
-https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html -->
+Log in to aws console and launch an ubuntu ec2 instance
 
-# Setting up aws server
+Copy google sheets secret key to server, which will allow the system to query g sheets
 
-Copy google sheets secret key to server
 `scp -i credentials/aws-key-pair.pem client_secret.json ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com:/home/ubuntu`
 
-ssh to ec2 instance
+ssh to ec2 instance (previously changing permissions on .pem file)
+
 `chmod 400 credentials/aws-key-pair.pem`
 
 `ssh -i credentials/aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com`
+
+Install dependencies in server
 
 `sudo apt update`
 
@@ -42,49 +58,57 @@ ssh to ec2 instance
 
 `sudo apt-get install python3-venv`
 
+Clone repo, create virtual environment and install project dependencies
+
+`github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
+
 `python3 -m venv venv`
 
 `source venv/bin/activate`
 
 `pip3 install -r requirements.txt`
 
-`github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
-
-`pip3 install -r requirements.txt`
-
-install tmux (only first time)
 `sudo apt install tmux`
 
-## Setting up web app
+### Setting up sessions for each component using tmux
 
-create a tmux session for the web app and run in
-`tmux web_app`
+#### web app
+
+Crete web app tmux session
+
+`tmux new -s web_app`
+
+Launch web app
+
 `python3 web_app.py`
 
-Remember to enable TCP calls from anywhere to port 5000 in aws security group associated to this instance.
+Enable TCP calls from anywhere to port 5000 (which is the one web_app.py uses) in aws security group associated to this instance.
 Rule: Custom TCP TCP 5000 Anywhere
 
-## Setting up covid_data_updater
+## spreadsheet data updater
 
-https://www.howtogeek.com/101288/how-to-schedule-tasks-on-linux-an-introduction-to-crontab-files/#:~:text=The%20cron%20daemon%20on%20Linux,automatically%20run%20them%20for%20you.
+Create tmux session
 
-## Setting up spreadsheet_data_updater
+`tmux new -s spreadsheet_data_updater`
 
-Setup cron to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
+Launch spreadsheet data updater
+
+`python3 spreadsheet_data_updater.py`
+
+Remember to enable TCP calls from anywhere to port 5002 (which is the one spreadsheed_data_updater.py uses) in aws security group associated to this instance.
+Rule: Custom TCP TCP 5002 Anywhere
+
+## covid data updater
+
+Setup [cron](https://opensource.com/article/17/11/how-use-cron-linux) to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
 
 ```
 crontab -e
 #Write down in the end of the crontab file the following line:
 0 */8 * * * /usr/bin/python3 /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater.py >> /home/ubuntu/return-to-fieldwork-dashboard/covid_data_updater_log.txt
 ```
-
 You can check what has crontab run with:
-
 ```
 tail /var/log/syslog
 ```
-
 Remember to use absolute routes
-
-Remember to enable TCP calls from anywhere to port 5002 in aws security group associated to this instance.
-Rule: Custom TCP TCP 5002 Anywhere
