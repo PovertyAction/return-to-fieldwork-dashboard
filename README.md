@@ -74,6 +74,13 @@ Clone repo, create virtual environment and install project dependencies
 
 #### web app
 
+To deploying web app in production:
+https://medium.com/faun/deploy-flask-app-with-nginx-using-gunicorn-7fda4f50066a
+
+Enable HTTP calls in aws security group associated to this instance.
+
+For development:
+
 Crete web app tmux session
 
 `tmux new -s web_app`
@@ -81,9 +88,6 @@ Crete web app tmux session
 Launch web app
 
 `python3 web_app.py`
-
-Enable TCP calls from anywhere to port 5000 (which is the one web_app.py uses) in aws security group associated to this instance.
-Rule: Custom TCP TCP 5000 Anywhere
 
 ## spreadsheet data updater
 
