@@ -36,7 +36,7 @@ def create_dictionary_with_countries(workbook, sheet_name):
 
     return countries_info
 
-def add_data_from_sheet(workbook, sheet_name, countries_dict):
+def add_outbreak_status_or_government_instruction_from_sheet(workbook, sheet_name, countries_dict):
 
     sheet = workbook.worksheet(sheet_name)#"Outbreak_status" or "Govt.Instruction"
 
@@ -56,23 +56,23 @@ def add_data_from_sheet(workbook, sheet_name, countries_dict):
     return countries_dict
 
 
-def add_override_status(workbook, sheet_name, countries_info):
+def add_override_status_or_link_local_case_count(workbook, sheet_name, key_to_use, countries_info):
 
     sheet = workbook.worksheet(sheet_name)
 
-    pairs_country_and_override_status = sheet.get_all_values()
+    pairs_country_and_info = sheet.get_all_values()
 
-    for index, country_status in enumerate(pairs_country_and_override_status):
+    for index, country_name_and_info in enumerate(pairs_country_and_info):
         #Skip header
         if index == 0:
             continue
 
-        #Get country and status from data
-        country = country_status[0]
-        status = country_status[1]
+        #Get country and info from data
+        country_name = country_name_and_info[0]
+        info = country_name_and_info[1]
 
         #Write info in dict
-        countries_info[country]['override_status'] = status
+        countries_info[country_name][key_to_use] = info
 
     return countries_info
 
@@ -94,9 +94,10 @@ def download_spreadsheet_data(workbook_name, show_prints=False):
         countries_info = create_dictionary_with_countries(workbook, "Outbreak_status")
 
         #Add data from different sheets in workbook
-        countries_info = add_data_from_sheet(workbook, "Outbreak_status", countries_info)
-        countries_info = add_data_from_sheet(workbook, "Govt.Instruction", countries_info)
-        countries_info = add_override_status(workbook, "Override Status", countries_info)
+        countries_info = add_outbreak_status_or_government_instruction_from_sheet(workbook, "Outbreak_status", countries_info)
+        countries_info = add_outbreak_status_or_government_instruction_from_sheet(workbook, "Govt.Instruction", countries_info)
+        countries_info = add_override_status_or_link_local_case_count(workbook, "Override Status", 'override_status', countries_info)
+        countries_info = add_override_status_or_link_local_case_count(workbook, "Local case count data", 'link_local_data', countries_info)
 
         #Save dict to json
         save_dict_to_json_file(countries_info, MANUAL_INPUTS_FILE)
