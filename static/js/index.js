@@ -289,6 +289,7 @@ function CreateTable() {
         "cases_per_100000",
         "government_restrictions",
         "subnational_outbreak_status",
+        "link_local_data"
       ]) {
         let cell = row.insertCell();
         let text = document.createTextNode(country_stats[country][key]);
@@ -308,5 +309,6 @@ function CreateTable() {
     "Cases per 100,000 people",
     "Government restrictions",
     "Subnational outbreak status",
+    "Link to local case count data"
   ]);
 }
