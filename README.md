@@ -41,16 +41,21 @@ Internally, this will call:
 Log in to aws console and launch an ubuntu ec2 instance
 
 Copy google sheets secret key to server, which will allow the system to query g sheets
+[Only once]
 
 `scp -i credentials/aws-key-pair.pem client_secret.json ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com:/home/ubuntu`
 
-ssh to ec2 instance (previously changing permissions on .pem file)
+Changing permissions on .pem file
+[Only once]
 
 `chmod 400 credentials/aws-key-pair.pem`
+
+ssh to ec2 instance
 
 `ssh -i credentials/aws-key-pair.pem ubuntu@ec2-18-217-4-44.us-east-2.compute.amazonaws.com`
 
 Install dependencies in server
+[Only once]
 
 `sudo apt update`
 
@@ -58,19 +63,29 @@ Install dependencies in server
 
 `sudo apt-get install python3-venv`
 
-Clone repo, create virtual environment and install project dependencies
+`sudo apt install tmux`
 
+Clone repo, create virtual environment
+[Only once]
 `github clone https://github.com/PovertyAction/return-to-fieldwork-dashboard.git`
 
 `python3 -m venv venv`
+
+Activate venv and install project dependencies
 
 `source venv/bin/activate`
 
 `pip3 install -r requirements.txt`
 
-`sudo apt install tmux`
-
 ### Setting up sessions for each component using tmux
+
+To list tmux sessions:
+
+`tmux ls`
+
+To log in (attach) to a tmux session:
+
+`tmux attach-session -t session_name`	
 
 #### web app
 
@@ -81,17 +96,23 @@ Enable HTTP calls in aws security group associated to this instance.
 
 For development:
 
-Crete web app tmux session
+Crete web app tmux session if it doesnt exist.
+[Only once]
 
 `tmux new -s web_app`
+
+If it already doest, attach to it:
+
+`tmux attach-session -t web_app`
 
 Launch web app
 
 `python3 web_app.py`
 
-## spreadsheet data updater
+#### spreadsheet data updater
 
 Create tmux session
+[Only once]
 
 `tmux new -s spreadsheet_data_updater`
 
@@ -102,7 +123,7 @@ Launch spreadsheet data updater
 Remember to enable TCP calls from anywhere to port 5002 (which is the one spreadsheed_data_updater.py uses) in aws security group associated to this instance.
 Rule: Custom TCP TCP 5002 Anywhere
 
-## covid data updater
+#### covid data updater
 
 Setup [cron](https://opensource.com/article/17/11/how-use-cron-linux) to run `covid_data_updater.py` every 8 hours and keep log in `covid_data_updater_log.txt`
 
