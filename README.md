@@ -89,8 +89,14 @@ To log in (attach) to a tmux session:
 
 #### web app
 
-To deploying web app in production:
+To deploying web app in production, follow step by step of this tutorial:
 https://medium.com/faun/deploy-flask-app-with-nginx-using-gunicorn-7fda4f50066a
+(There might be some little things missing, check questions in tutorial)
+[Only once]
+
+To restart web server every time we've made updates:
+
+`sudo systemctl restart nginx`
 
 Enable HTTP calls in aws security group associated to this instance.
 
