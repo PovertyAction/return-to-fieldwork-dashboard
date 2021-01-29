@@ -47,6 +47,8 @@ function CreateMap() {
           country_stats[country_name].government_restrictions;
         countries_shape.features[i].properties.subnational_outbreak_status =
           country_stats[country_name].subnational_outbreak_status;
+        countries_shape.features[i].properties.link_local_data =
+          country_stats[country_name].link_local_data;
       }
     }
 
@@ -122,7 +124,8 @@ function CreateMap() {
     case_doubling_rate,
     cases_per_100000,
     government_restrictions,
-    subnational_outbreak_status
+    subnational_outbreak_status,
+    link_local_data
   ) {
     text_box = document.getElementById("text-boxes");
     text_box.innerHTML = "";
@@ -160,6 +163,15 @@ function CreateMap() {
         subnational_outbreak_status +
         "</p>";
     }
+
+    if (link_local_data) {
+      text_box.innerHTML =
+        text_box.innerHTML +
+        "<h3>Link to local case count data</h3>" +
+        "<p>" +
+        link_local_data +
+        "</p>";
+    }
   }
 
   // method that we will use to update the control based on feature properties passed
@@ -179,7 +191,8 @@ function CreateMap() {
         props.case_doubling_rate,
         props.cases_per_100000,
         props.government_restrictions,
-        props.subnational_outbreak_status
+        props.subnational_outbreak_status,
+        props.link_local_data
       );
     } else {
       update_text_boxes("", "");
@@ -213,23 +226,6 @@ function getColor(status) {
     : "#FFFFFF"; //#CDCDCD
 }
 
-//Get status of country based on its covid stats
-function get_status(new_cases_per_day, case_doubling_rate, cases_per_100000) {
-  //Parse all arguments to integers
-  new_cases_per_day = parseInt(new_cases_per_day.toString().replace(">", ""));
-  case_doubling_rate = parseInt(case_doubling_rate.toString().replace(">", ""));
-  cases_per_100000 = parseInt(cases_per_100000.toString().replace(">", ""));
-
-  if (
-    new_cases_per_day < 100 &&
-    (case_doubling_rate >= 10 || case_doubling_rate <= 0) &&
-    cases_per_100000 < 50
-  ) {
-    return "yellow";
-  } else {
-    return "red";
-  }
-}
 
 //Build table. ReferenceÑ https://www.valentinog.com/blog/html-table/
 function CreateTable() {
@@ -289,6 +285,7 @@ function CreateTable() {
         "cases_per_100000",
         "government_restrictions",
         "subnational_outbreak_status",
+        "link_local_data"
       ]) {
         let cell = row.insertCell();
         let text = document.createTextNode(country_stats[country][key]);
@@ -308,5 +305,6 @@ function CreateTable() {
     "Cases per 100,000 people",
     "Government restrictions",
     "Subnational outbreak status",
+    "Link to local case count data"
   ]);
 }
