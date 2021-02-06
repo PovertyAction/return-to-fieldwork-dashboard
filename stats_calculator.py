@@ -5,6 +5,7 @@ import warnings
 np.seterr(divide = 'ignore')
 from file_names import *
 import sys
+import datetime
 #Set warnings as errors
 warnings.filterwarnings("error")
 
@@ -43,7 +44,7 @@ def compute_country_stats(show_prints=False):
         caldata.columns = ["_".join(x) for x in caldata.columns.ravel()]
         caldata.rename(columns = {'new_cases_<lambda_0>': 'caseavg_3day', 'new_cases_<lambda_1>': 'caseavg_7day',
                                   'new_cases_smoothed_<lambda>': 'caseavg_7dayprev', 'date_first': 'date', 'population_first': 'population',
-                                  'location_':'location', 'continent_first':'region', 'positive_rate_first':'positive_rate'},
+                                  'location_':'location', 'continent_first':'region', 'positive_rate_first':'positive_rate', 'date_first':'date'},
                                   inplace = True)
 
         # Second step calculation
@@ -65,11 +66,15 @@ def compute_country_stats(show_prints=False):
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
         caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "1111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
+        caldata["positive_rate"] = caldata['positive_rate'].round(2)
+        
 
         # Final output
-        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000']]
+        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000', 'positive_rate', 'date']]
         caldata = caldata.applymap(str)
-
+        caldata['positive_rate'] = caldata['positive_rate'].apply(lambda x : '' if x=='nan' else x+'%')
+        caldata1 = caldata.sort_values(['region', 'location'], ascending=[True, True])
+        caldata = caldata1 
 
         # Import manual_inputs.json
         with open(MANUAL_INPUTS_FILE) as f:

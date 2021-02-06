@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTSQM97Q8C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CTSQM97Q8C');
+  </script>
+
+  <!-- Import Open Sans font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Leaflet links -->
@@ -11,25 +25,55 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <h1>IPA Country Status Dashboard</h1>
-  <p id="subtitle"> Loading...</p>
-
-
-
+  <div class="header"  style="position:relative; width:1150px; display: block; margin: 0 auto;">
+   <img src="static/images/IPA-Africa-CMYK.png" alt="logo" height="150" style="background-color:transparent;float: left" />
+    <h1>IPA Country Status Dashboard</h1>  
+    <p id="subtitle"> Loading...</p>  
+  </div>
+  
   <div class="vis-container">
+    
+
+    <p style=  "font-size: 16px;
+                            color: #666;
+                            font-family: 'Open Sans';
+                            margin-right: 20px;
+                            margin-top: 12px;
+                            margin-left: 20px;
+                            display: inline-block;"> 
+       <span id="date" style=  "font-size: 22px;
+                            color: #666;
+                            font-family: 'Open Sans';
+                            font-weight: 900;
+                            margin-right: 20px;
+                            margin-top: 12px;
+                            text-shadow: 2px 7px 5px rgb(0 0 0 / 20%),
+                            0px -4px 10px rgb(255 255 255 / 20%);"> </span>
+    
+       </br>
+       </br> 
+       </br> 
+
+       <b>Thresholds:</b> </br>
+        New cases per day > 100</br>
+        Case doubling rate <10 days</br>
+        COVID-19 cases per 100,000 people > 50</br>
+        Positivity rate > 5%
+   
+    </p>
     <div class="map-container">
       <div id="map"></div>
       <div class="key-container" id="red-key">
         <div class="colored-rectangle" id="red-rectangle"></div>
-        <p class="rectangle-info" id="red-rectangle-text-box">Project applications are discouraged and would not likely be approved except in very unusual circumstances and with detailed justification.</p>
+        <p class="rectangle-info" id="red-rectangle-text-box" style="font-size:14px">Project applications are discouraged and would not likely be approved except in very unusual circumstances and with detailed justification.</p>
       </div>
       <div class="key-container" id="yellow-key">
         <div class="colored-rectangle" id="yellow-rectangle"></div>
-        <p class="rectangle-info" id="yellow-rectangle-text-box">Project applications will require careful justification and risk-benefit analysis. It will typically apply to countries where selected regions are safer, for example, excluding large cities where outbreaks might be present but contained. It is important that project applications provide evidence specific to the region where data will be collected (and where enumerators will be coming from).</p>
+        <p class="rectangle-info" id="yellow-rectangle-text-box" style="font-size:14px;">Project applications will require careful justification and risk-benefit analysis. It will typically apply to countries where selected regions are safer, for example, excluding large cities where outbreaks might be present but contained. It is important that project applications provide evidence specific to the region where data will be collected (and where enumerators will be coming from).</p>
       </div>
       <div class="key-container" id="green-key">
         <div class="colored-rectangle" id="green-rectangle"></div>
-        <p class="rectangle-info" id="green-rectangle-text-box">Projects have already been approved in this country and the conditions are somewhat favorable. Each project will still have to apply, but applications will have a greater presumption of being approved.</p>
+        <p class="rectangle-info" id="green-rectangle-text-box" style="font-size:14px;">Projects have already been approved in this country and the conditions are somewhat favorable. Each project will still have to apply, but applications will have a greater presumption of being approved.</p>
       </div>
     </div>
     <div id="text-boxes"></div>
@@ -39,8 +83,9 @@
   </table>
   <footer>
 
-    <p>Data Source: <a class = "links" href="https://covid.ourworldindata.org/data/owid-covid-data.csv">Our World in Data.</a></br>
-    Code adapted from: <a class = "links" href="https://leafletjs.com/examples/choropleth/">Leaflet example.</a>
+    <p>- Data Source: <a class = "links" href="https://covid.ourworldindata.org/data/owid-covid-data.csv">Our World in Data.</a></br>
+      - Doubling rate extrapolated from the week-over-week change in new cases. </br>
+    - Code adapted from: <a class = "links" href="https://leafletjs.com/examples/choropleth/">Leaflet example.</a>
     </p>
   </footer>
 

@@ -202,6 +202,9 @@ function CreateMap() {
   info.addTo(map);
 
   //Update subtitle
+  let lastdate = country_stats["Bangladesh"].date;
+  document.getElementById("date").innerHTML =
+    "As of: </br>" + lastdate 
   document.getElementById("subtitle").innerHTML =
     "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection";
 
@@ -283,13 +286,27 @@ function CreateTable() {
         "new_cases_per_day",
         "case_doubling_rate",
         "cases_per_100000",
+        "positive_rate",
         "government_restrictions",
         "subnational_outbreak_status",
         "link_local_data"
       ]) {
         let cell = row.insertCell();
         let text = document.createTextNode(country_stats[country][key]);
-        cell.appendChild(text);
+        let plaintext = country_stats[country][key];
+        if (key == "link_local_data") {
+          /*var linktext = '<a href="' + text + '">' + text + '</a>';*/
+          /*cell.appendChild('<a href="' + text + '">' + text + '</a>');*/
+          var a = document.createElement('a');
+          a.appendChild(text);
+          a.title = "Click to visit";
+          a.href = plaintext;
+          a.setAttribute('target', '_blank');
+          cell.appendChild(a);
+        }
+        else {
+          cell.appendChild(text);
+        }
       }
     }
   }
@@ -303,6 +320,7 @@ function CreateTable() {
     "New cases per day",
     "Case doubling rate",
     "Cases per 100,000 people",
+    "Postivity rate",
     "Government restrictions",
     "Subnational outbreak status",
     "Link to local case count data"

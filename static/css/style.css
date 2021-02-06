@@ -3,12 +3,15 @@ body {
   flex-direction: column;
 }
 
+
 h1 { 
     font-family: "Open Sans";
+    position: relative;
     color: #81B53C;
     font-size: 60px;
     text-align: center;
-    margin: 10px;}
+    margin: 10px;
+  }
     /**/
 
 #subtitle { 
@@ -17,7 +20,7 @@ h1 {
     font-size: 20px;
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 
@@ -25,7 +28,7 @@ h1 {
 .vis-container {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   height: 700px; /*Maybe change this*/
   width: 100%;
 }
@@ -70,6 +73,7 @@ h1 {
 
 p.rectangle-info{
   margin: 5px;
+  font-size: 12px;
 }
 
 #text-boxes{
@@ -93,7 +97,7 @@ h3 {
 p { 
     font-family: "Open Sans";
     color: #777;
-    font-size: 20px;
+    font-size: 12px;
 }
 
 #text-boxes p {
@@ -153,9 +157,17 @@ p {
 
 /*TABLE CSS*/
 
-table {margin: 20px;}
+table {margin: 0 5%;}
 
 th {background-color: #CBD3D8;}
+th {padding: 5px;}
+
+td {
+    padding: 5px; 
+    text-align: center; 
+    font-size: 14px;
+    font-weight: 500;
+  }
 
 tr {
   font-family: "Open Sans";
@@ -166,19 +178,21 @@ tr {
 /*FOOTER CSS*/
 
 footer {
-  background-color: #81B53C;
+  background-color: #666;
   color: #FFF;
   height: 55px;
 
   display: flex;
   justify-content: left;
-  padding:5px;
+  padding:40px;
+  margin: 0 5.1%;
 
 }
 
 footer p{
-  margin: 5px;
-  font-family: sans-serif;
-  font-style: italic;
+  margin: 0px;
+  font-family: "Open Sans";
+  /*font-style: italic;*/
   color: #FFFFFF;
+  font-size: 18px !important;
 }
