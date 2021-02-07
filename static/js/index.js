@@ -295,8 +295,6 @@ function CreateTable() {
         let text = document.createTextNode(country_stats[country][key]);
         let plaintext = country_stats[country][key];
         if (key == "link_local_data") {
-          /*var linktext = '<a href="' + text + '">' + text + '</a>';*/
-          /*cell.appendChild('<a href="' + text + '">' + text + '</a>');*/
           var a = document.createElement('a');
           a.appendChild(text);
           a.title = "Click to visit";
