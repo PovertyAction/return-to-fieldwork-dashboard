@@ -43,6 +43,8 @@ function CreateMap() {
           country_stats[country_name].case_doubling_rate;
         countries_shape.features[i].properties.cases_per_100000 =
           country_stats[country_name].cases_per_100000;
+          countries_shape.features[i].properties.positive_rate =
+          country_stats[country_name].positive_rate;
         countries_shape.features[i].properties.government_restrictions =
           country_stats[country_name].government_restrictions;
         countries_shape.features[i].properties.subnational_outbreak_status =
@@ -123,6 +125,7 @@ function CreateMap() {
     new_cases_per_day,
     case_doubling_rate,
     cases_per_100000,
+    positive_rate,
     government_restrictions,
     subnational_outbreak_status,
     link_local_data
@@ -143,6 +146,10 @@ function CreateMap() {
         "</br>" +
         "Cases per 100,000 people: " +
         cases_per_100000 +
+        "</br>" +
+        "Positivity rate: " +
+        positive_rate +
+        "</br>" +
         "</p>";
     }
 
@@ -190,6 +197,7 @@ function CreateMap() {
         props.new_cases_per_day,
         props.case_doubling_rate,
         props.cases_per_100000,
+        props.positive_rate,
         props.government_restrictions,
         props.subnational_outbreak_status,
         props.link_local_data
@@ -318,7 +326,7 @@ function CreateTable() {
     "New cases per day",
     "Case doubling rate",
     "Cases per 100,000 people",
-    "Postivity rate",
+    "Positivity rate",
     "Government restrictions",
     "Subnational outbreak status",
     "Link to local case count data"
