@@ -66,6 +66,7 @@ def compute_country_stats(show_prints=False):
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
         caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "1111" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
+        caldata["positive_rate"] = (caldata['positive_rate'])*100
         caldata["positive_rate"] = caldata['positive_rate'].round(2)
         
 
