@@ -211,10 +211,10 @@ function CreateMap() {
 
   //Update subtitle
   let lastdate = country_stats["Bangladesh"].date;
-  document.getElementById("date").innerHTML =
-    "As of: </br>" + lastdate 
+  /*document.getElementById("date").innerHTML =
+    "As of: </br>" + lastdate */
   document.getElementById("subtitle").innerHTML =
-    "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection";
+    "Regularly updated by IPA's Global Programs Director</br>To be used in assessing context for approving in-person field data collection</br>Last updated: <b>" + lastdate + "</b>";
 
   function fill_map_keys() {
     //Change visibility of keys
@@ -281,11 +281,11 @@ function CreateTable() {
       //  cell.style.colspan = "2";
       //}
 
-      let text = document.createTextNode(country_stats[country]["region"]);
-      cell.appendChild(text);
+      // let text = document.createTextNode(country_stats[country]["region"]);
+      // cell.appendChild(text);
 
       //Insert name of country
-      cell = row.insertCell();
+      // cell = row.insertCell();
       text = document.createTextNode(country);
       cell.appendChild(text);
 
@@ -321,7 +321,7 @@ function CreateTable() {
 
   generateTable(table, country_stats);
   generateTableHead(table, [
-    "Region",
+    // "Region",
     "Country",
     "New cases per day",
     "Case doubling rate",
