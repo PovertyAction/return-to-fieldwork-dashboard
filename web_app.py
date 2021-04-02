@@ -32,6 +32,7 @@ def reload_covid_data():
 
 @app.route('/')
 def show_dashboard():
+    load_country_stats()
     return render_template('index.html', country_stats=country_stats, countries_shape=countries_shape)
 
 load_country_stats()
