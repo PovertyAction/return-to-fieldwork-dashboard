@@ -57,21 +57,21 @@ def compute_country_stats(show_prints=False):
         caldata["status_3day"] = caldata["caseavg_3day"].apply(lambda x : 1 if x <= 100 else 0)
         caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
         caldata["status_casepop"] = caldata["cases_per_100000"].apply(lambda x : 1 if x <= 50 else 0)
-        caldata["positive_rate_dum"] = caldata["positive_rate"].apply(lambda x : 0 if (x > 0.005) else 1)
-        caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.status_casepop.map(str) + caldata.positive_rate_dum.map(str)
+        caldata["positive_rate_dum"] = caldata["positive_rate"].apply(lambda x : 0 if (x > 0.005) else 1 if (x <= 0.005) else '') 
+        caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.positive_rate_dum.map(str)
 
 
         # Third step - dashboard
         caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else round(x, 1))
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
-        caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "1111" else "Red")
+        caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "111" or x == "11" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
         caldata["positive_rate"] = (caldata['positive_rate'])*100
         caldata["positive_rate"] = caldata['positive_rate'].round(2)
         
 
         # Final output
-        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate', 'new_cases_per_day', 'cases_per_100000', 'positive_rate', 'date']]
+        caldata = caldata[['location', 'region', 'status', 'case_doubling_rate',  'new_cases_per_day', 'cases_per_100000', 'positive_rate', 'date']]
         caldata = caldata.applymap(str)
         caldata['positive_rate'] = caldata['positive_rate'].apply(lambda x : '' if x=='nan' else x+'%')
         caldata1 = caldata.sort_values(['region', 'location'], ascending=[True, True])
