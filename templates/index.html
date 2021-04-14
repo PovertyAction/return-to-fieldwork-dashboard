@@ -16,7 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <!-- Leaflet links -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
@@ -80,14 +81,18 @@
     </div>
     <div id="text-boxes"></div>
   </div>
-  <table>
-    <!-- Use this! https://colorlib.com/wp/template/fixed-header-table/ -->
-  </table>
-  <footer>
+  <div class="table-container">
+    <table>
+      <!-- Use this! https://colorlib.com/wp/template/fixed-header-table/ -->
+    </table>
+  </div>
+ 
+  <footer class=footer>
 
-    <p>- Data Source: <a class = "links" href="https://covid.ourworldindata.org/data/owid-covid-data.csv">Our World in Data.</a></br>
+    <p>
+      - Data Source: <a class = "links" href="https://covid.ourworldindata.org/data/owid-covid-data.csv">Our World in Data.</a></br>
       - Doubling rate extrapolated from the week-over-week change in new cases. </br>
-    - Code adapted from: <a class = "links" href="https://leafletjs.com/examples/choropleth/">Leaflet example.</a>
+      - Code adapted from: <a class = "links" href="https://leafletjs.com/examples/choropleth/">Leaflet example.</a>
     </p>
   </footer>
 
@@ -110,4 +115,6 @@
 
 
 </body>
+
+
 </html>
