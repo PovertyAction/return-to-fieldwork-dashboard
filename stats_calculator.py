@@ -57,7 +57,7 @@ def compute_country_stats(show_prints=False):
         caldata["status_3day"] = caldata["caseavg_3day"].apply(lambda x : 1 if x <= 100 else 0)
         caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
         caldata["status_casepop"] = caldata["cases_per_100000"].apply(lambda x : 1 if x <= 50 else 0)
-        caldata["positive_rate_dum"] = caldata["positive_rate"].apply(lambda x : 0 if (x > 0.005) else 1 if (x <= 0.005) else '') 
+        caldata["positive_rate_dum"] = caldata["positive_rate"].apply(lambda x : 0 if (x > 0.05) else 1 if (x <= 0.05) else '') 
         caldata['statuscode'] = caldata.status_3day.map(str) + caldata.status_dbl.map(str) + caldata.positive_rate_dum.map(str)
 
 
