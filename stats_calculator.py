@@ -50,9 +50,7 @@ def compute_country_stats(show_prints=False):
         # Second step calculation
         caldata["growthrate"] = (caldata['caseavg_7day'] - caldata['caseavg_7dayprev']) *100 / caldata['caseavg_7dayprev']
         caldata["cases_per_100000"] = caldata['total_cases_max']*100000 / caldata['population']
-        caldata["douberate"] = (np.log(2) / np.log((1 + caldata['growthrate']/100))).where((caldata.location.str.contains("Paraguay"))
-                                                | (caldata.location.str.contains("Dominican Republic")),
-                                                (7*70 / caldata['growthrate']))
+        caldata["douberate"] = (np.log(2) / np.log((1 + caldata['growthrate']/100)))
         caldata["douberate"] = caldata["douberate"].fillna(0)
         caldata["status_3day"] = caldata["caseavg_3day"].apply(lambda x : 1 if x <= 100 else 0)
         caldata["status_dbl"] = caldata["douberate"].apply(lambda x : 1 if (x >= 10 or x <= 0) else 0)
