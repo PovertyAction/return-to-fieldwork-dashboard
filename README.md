@@ -143,3 +143,33 @@ You can check what has crontab run with:
 tail /var/log/syslog
 ```
 Remember to use absolute routes
+
+
+## Calculation steps
+
+### Data source
+The [data](https://github.com/owid/covid-19-data/tree/master/public/data) compiled by [Our World in Data (OWD)](https://ourworldindata.org/covid-cases) is used for the calculations. The data can be downloaded from [here](https://covid.ourworldindata.org/data/owid-covid-data.csv). To learn more about the variables used for the calculations, please read the [codebook](https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv).
+
+
+### New cases per day
+Variable ``new_cases`` is used to calculate the last _3 days average_ of new cases per day. 
+
+### Case doubling rate
+Doubling rate extrapolated from the week-over-week change in new cases. Case doubling rate is calculated using the following formula and expressed in number of _days_:
+```math
+Case\ doubling\ rate = \cfrac {ln(2)} {ln(1+\cfrac {growthrate} {100})}
+```
+```math
+growthrate = \cfrac {Average\ new\ cases\ in\ last\ 7\ days - Average\ new\ cases\ in\ previous\ 7\ days}  {Average\ new\ cases\ in\ previous\ 7\ days}
+```
+
+Case doubling rate is marked as __>100__ if the rate is either _more than 100 days_ or _negative_. Case doubling rate __Not Applicable (N/A)__ means there was no new cases and thus the case doubling rate is 0.
+
+### Cases per 100,000 people
+Variables ``total_cases`` and ``population`` were used to calculate cases per 100,000 people.
+```math
+Cases\ per\ 100,000\ people = \cfrac {total\_cases*100000} {population}
+```
+
+### Positivity rate
+Variable ``positive_rate`` was used.

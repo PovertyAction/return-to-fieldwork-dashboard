@@ -30,7 +30,7 @@ def compute_country_stats(show_prints=False):
         # First step calculation
         aggregations = {
             "new_cases": [lambda t: t.head(3).mean(), lambda t: t.head(7).mean()],
-            "new_cases_smoothed": [lambda t: t.iloc[7].mean()],
+            "new_cases_smoothed": [lambda t: t.iloc[7]],
             "date": "first",
             "population": "first",
             'total_cases': "max",
@@ -60,7 +60,7 @@ def compute_country_stats(show_prints=False):
 
 
         # Third step - dashboard
-        caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else round(x, 1))
+        caldata["case_doubling_rate"] = caldata["douberate"].apply(lambda x : '>100' if (x <0 or x > 100) else 'N/A' if (round(x, 1) == 0) else round(x, 1))
         caldata["new_cases_per_day"] = caldata['caseavg_3day'].round(0).astype(int)
         caldata['status'] = caldata["statuscode"].apply(lambda x : "Yellow" if x == "111" or x == "11" else "Red")
         caldata['cases_per_100000'] = caldata['cases_per_100000'].round(1)
