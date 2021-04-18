@@ -331,3 +331,22 @@ a:active {
   color: #FFFFFF;
   font-size: 18px !important;
 }
+
+.warning-nr {
+  display: none;
+}
+
+@media only screen and (max-width: 1100px) {
+  .warning-nr {
+    display: block;
+    padding: 5px;
+  }
+  .warning-nr p {
+    font-size: 18px;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid;
+    background-color: #b54c3c;  
+  }
+}
