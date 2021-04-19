@@ -146,6 +146,7 @@ Remember to use absolute routes
 
 
 ## Calculation steps
+<!-- https://www.codecogs.com/latex/eqneditor.php -->
 
 ### Data source
 The [data](https://github.com/owid/covid-19-data/tree/master/public/data) compiled by [Our World in Data (OWD)](https://ourworldindata.org/covid-cases) is used for the calculations. The data can be downloaded from [here](https://covid.ourworldindata.org/data/owid-covid-data.csv). To learn more about the variables used for the calculations, please read the [codebook](https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-codebook.csv).
