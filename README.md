@@ -156,20 +156,17 @@ Variable ``new_cases`` is used to calculate the last _3 days average_ of new cas
 
 ### Case doubling rate
 Doubling rate extrapolated from the week-over-week change in new cases. Case doubling rate is calculated using the following formula and expressed in number of _days_:
-```math
-Case\ doubling\ rate = \cfrac {ln(2)} {ln(1+\cfrac {growthrate} {100})}
-```
-```math
-growthrate = \cfrac {Average\ new\ cases\ in\ last\ 7\ days - Average\ new\ cases\ in\ previous\ 7\ days}  {Average\ new\ cases\ in\ previous\ 7\ days}
-```
+
+<p style="text-align:center"><a href="https://www.codecogs.com/eqnedit.php?latex=Case\&space;doubling\&space;rate&space;=&space;\cfrac&space;{ln(2)}&space;{ln(1&plus;\cfrac&space;{growthrate}&space;{100})}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Case\&space;doubling\&space;rate&space;=&space;\cfrac&space;{ln(2)}&space;{ln(1&plus;\cfrac&space;{growthrate}&space;{100})}" title="Case\ doubling\ rate = \cfrac {ln(2)} {ln(1+\cfrac {growthrate} {100})}" /></a></p>
+
+<p style="text-align:center"><a href="https://www.codecogs.com/eqnedit.php?latex=growthrate&space;=&space;\cfrac&space;{Average\&space;new\&space;cases\&space;in\&space;last\&space;7\&space;days&space;-&space;Average\&space;new\&space;cases\&space;in\&space;previous\&space;7\&space;days}&space;{Average\&space;new\&space;cases\&space;in\&space;previous\&space;7\&space;days}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?growthrate&space;=&space;\cfrac&space;{Average\&space;new\&space;cases\&space;in\&space;last\&space;7\&space;days&space;-&space;Average\&space;new\&space;cases\&space;in\&space;previous\&space;7\&space;days}&space;{Average\&space;new\&space;cases\&space;in\&space;previous\&space;7\&space;days}" title="growthrate = \cfrac {Average\ new\ cases\ in\ last\ 7\ days - Average\ new\ cases\ in\ previous\ 7\ days} {Average\ new\ cases\ in\ previous\ 7\ days}" /></a></p>
 
 Case doubling rate is marked as __>100__ if the rate is either _more than 100 days_ or _negative_. Case doubling rate __Not Applicable (N/A)__ means there was no new cases and thus the case doubling rate is 0.
 
 ### Cases per 100,000 people
 Variables ``total_cases`` and ``population`` were used to calculate cases per 100,000 people.
-```math
-Cases\ per\ 100,000\ people = \cfrac {total\_cases*100000} {population}
-```
+
+<p style="text-align:center"><a href="https://www.codecogs.com/eqnedit.php?latex=Cases\&space;per\&space;100,000\&space;people&space;=&space;\cfrac&space;{total\_cases*100000}&space;{population}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Cases\&space;per\&space;100,000\&space;people&space;=&space;\cfrac&space;{total\_cases*100000}&space;{population}" title="Cases\ per\ 100,000\ people = \cfrac {total\_cases*100000} {population}" /></a></p>
 
 ### Positivity rate
 Variable ``positive_rate`` was used.
