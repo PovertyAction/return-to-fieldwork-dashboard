@@ -153,7 +153,7 @@ The [data](https://github.com/owid/covid-19-data/tree/master/public/data) compil
 
 
 ### New cases per day
-Variable ``new_cases`` is used to calculate the last _3 days average_ of new cases per day. 
+Variable ``new_cases`` is used to calculate the last _3 days rolling average_ of new cases per day. 
 
 ### Case doubling rate
 Doubling rate extrapolated from the week-over-week change in new cases. Case doubling rate is calculated using the following formula and expressed in number of _days_:
